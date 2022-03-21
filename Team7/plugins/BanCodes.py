@@ -19,6 +19,6 @@ help_plus = """ Here is Help for Bancodes  :-
 ֍ • {OSx17} - CYBER THREATENING / CYBER BULLY
 ֍ • {OSx18} - NSFW SPAMMER
 
-Powered By Slayer Scanner 
+Powered By Team7 Scanner 
 """
 __plugin_name__ = "BanCodes"
