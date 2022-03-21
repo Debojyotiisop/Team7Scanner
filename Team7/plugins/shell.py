@@ -1,4 +1,4 @@
-from Sibyl_System import system_cmd, System
+from Team7 import system_cmd, System
 import asyncio
 import io
 
