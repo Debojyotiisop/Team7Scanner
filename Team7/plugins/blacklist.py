@@ -1,7 +1,7 @@
 from Team7 import System, TEAM7, ENFORCERS, Team7_logs, system_cmd
 import re
-import Sibyl_System.plugins.Mongo_DB.message_blacklist as db
-import Sibyl_System.plugins.Mongo_DB.name_blacklist as wlc_collection
+import Team7.plugins.Mongo_DB.message_blacklist as db
+import Team7.plugins.Mongo_DB.name_blacklist as wlc_collection
 from telethon import events
 
 
