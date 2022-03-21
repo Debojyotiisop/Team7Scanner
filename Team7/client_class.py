@@ -8,7 +8,7 @@ from .strings import (
 )
 from .utils import FlagParser, ParseError
 
-from Team7_System import (
+from Team7 import (
     Team7_logs,
     Team7_approved_logs,
     GBAN_MSG_LOGS,
@@ -16,7 +16,7 @@ from Team7_System import (
     API_ID_KEY,
     API_HASH_KEY,
 )
-from Team7_System.plugins.Mongo_DB.gbans import update_gban, delete_gban
+from Team7.plugins.Mongo_DB.gbans import update_gban, delete_gban
 
 
 class Team7Client(TelegramClient):
