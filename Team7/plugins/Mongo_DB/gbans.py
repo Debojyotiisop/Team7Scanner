@@ -2,7 +2,7 @@ from Team7 import MONGO_CLIENT
 from typing import Optional, Dict, Union
 from datetime import datetime
 
-db = MONGO_CLIENT["Sibyl"]["Main"]
+db = MONGO_CLIENT["Team7"]["Main"]
 
 async def get_gban(user: int) -> Optional[Dict[str, Union[str, int]]]:
     json =  await db.find_one({"user": user})
