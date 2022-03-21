@@ -48,7 +48,7 @@ else:
     API_HASH_KEY = Config.API_HASH
     STRING_SESSION = Config.STRING_SESSION
     MONGO_DB_URL = Config.MONGO_DB_URL
-    with open(os.path.join(os.getcwd(), "Vortex\\elevated_users.json"), "r") as f:
+    with open(os.path.join(os.getcwd(), "Team7\\elevated_users.json"), "r") as f:
         data = json.load(f)
     SIBYL = data["SIBYL"]
     ENFORCERS = data["ENFORCERS"]
