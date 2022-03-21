@@ -10,8 +10,8 @@ services:
       MONGO_DB_URL: $MONGO_DB_URL
       Inspectors: $Inspectors
       Enforcers: $Enforcers
-      Sibyl_logs: $Sibyl_logs
-      Sibyl_Approved_Logs: $Sibyl_Approved_Logs
+      Team7_logs: $Team7_logs
+      Team7_Approved_Logs: $Team7_Approved_Logs
       GBAN_MSG_LOGS: $GBAN_MSG_LOGS
       BOT_TOKEN: $BOT_TOKEN
       ENV: $ENV
