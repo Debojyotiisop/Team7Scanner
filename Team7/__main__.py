@@ -1,12 +1,12 @@
-from Sibyl_System import (
+from Team7 import (
     System,
     system_cmd,
     make_collections,
     INSPECTORS,
     ENFORCERS,
-    Sibyl_logs,
+    Team7_logs,
 )
-from Sibyl_System.strings import on_string
+from Team7.strings import on_string
 import logging
 import importlib
 import asyncio
@@ -16,7 +16,7 @@ logging.basicConfig(
     format="[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s", level=logging.WARNING
 )
 
-from Sibyl_System.plugins import to_load
+from Team7.plugins import to_load
 
 HELP = {}
 IMPORTED = {}
@@ -24,7 +24,7 @@ FAILED_TO_LOAD = {}
 
 for load in to_load:
     try:
-        imported = importlib.import_module("Sibyl_System.plugins." + load)
+        imported = importlib.import_module("Team7.plugins." + load)
         if not hasattr(imported, "__plugin_name__"):
             imported.__plugin_name__ = imported.__name__
 
@@ -41,7 +41,7 @@ for load in to_load:
         print("------------------------------------")
 
 
-@System.on(system_cmd(pattern=r"osinfo", allow_enforcer=True))
+@System.on(system_cmd(pattern=r"t7info", allow_enforcer=True))
 async def status(event):
     msg = await event.reply("Conecting to Slayer System.")
     time.sleep(1)
@@ -65,7 +65,7 @@ async def status(event):
     await msg.edit(on_string.format(Enforcer=user_status, name=sender.first_name))
 
 
-@System.on(system_cmd(pattern="oraizon stats"))
+@System.on(system_cmd(pattern="t7stats"))
 async def stats(event):
     msg = f"Processed {System.processed} messages since last restart."
     msg += f"\n{len(ENFORCERS)} Enforcers & {len(INSPECTORS)} Inspectors"
@@ -108,9 +108,9 @@ async def main():
         msg = "Few plugins failed to load:"
         for plugin in FAILED_TO_LOAD:
             msg += f"\n**{plugin}**\n\n`{FAILED_TO_LOAD[plugin]}`"
-        await System.send_message(Sibyl_logs, msg)
+        await System.send_message(Team7_logs, msg)
     else:
-        await System.send_message(Sibyl_logs, "I'm up!")
+        await System.send_message(Team7_logs, "I'm up!")
     await System.run_until_disconnected()
 
 
