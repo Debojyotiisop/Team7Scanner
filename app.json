@@ -1,7 +1,7 @@
 {
    "name": "Sybil",
    "description": "hmm no time",
-   "repository": "https://github.com/zeuslord224/SibylSystem ",
+   "repository": "https://github.com/zeuslord224/Team7Scanner",
    "buildpacks": [
     {
       "url": "heroku/python"
