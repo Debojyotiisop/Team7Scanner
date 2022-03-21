@@ -107,7 +107,7 @@ async def make_collections() -> str:
 
 def system_cmd(
     pattern=None,
-    allow_sibyl=True,
+    allow_team7=True,
     allow_enforcer=False,
     allow_inspectors=False,
     allow_slash=True,
