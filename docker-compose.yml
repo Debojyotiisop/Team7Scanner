@@ -4,7 +4,7 @@ services:
     build: .
     environment:
       SESSION: $SESSION
-      SIBYL: $SIBYL
+      TEAM7: $TEAM7
       API_ID_KEY: $API_ID_KEY 
       API_HASH_KEY : $API_HASH_KEY 
       MONGO_DB_URL: $MONGO_DB_URL
