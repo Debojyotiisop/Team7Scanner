@@ -3,7 +3,7 @@ services:
   worker:
     build: .
     environment:
-    VARS:
+      VARS:
       SESSION: $SESSION
       TEAM7: $TEAM7
       API_ID_KEY: $API_ID_KEY 
