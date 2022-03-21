@@ -1,12 +1,12 @@
-from Sibyl_System import Sibyl_logs, ENFORCERS, SIBYL, INSPECTORS
-from Sibyl_System.strings import (
+from Team7 import Team7_logs, ENFORCERS, TEAM7, INSPECTORS
+from Team7.strings import (
     scan_request_string,
     reject_string,
     proof_string,
     forced_scan_string,
 )
-from Sibyl_System import System, system_cmd
-from Sibyl_System.utils import seprate_flags, Flag
+from Team7 import System, system_cmd
+from Team7.utils import seprate_flags, Flag
 
 import re
 
@@ -86,7 +86,7 @@ async def scan(event, flags):
         if message.from_id.user_id in ENFORCERS:
             return
         msg = await System.send_message(
-            Sibyl_logs,
+            Team7_logs,
             scan_request_string.format(
                 enforcer=executor,
                 spammer=message.from_id.user_id,
@@ -102,7 +102,7 @@ async def scan(event, flags):
         if replied.fwd_from:
             reply = replied.fwd_from
             target = reply.from_id.user_id
-            if reply.from_id.user_id in ENFORCERS or reply.from_id.user_id in SIBYL:
+            if reply.from_id.user_id in ENFORCERS or reply.from_id.user_id in TEAM7:
                 return
             if not reply.from_id.user_id:
                 await event.reply("Cannot get user ID.")
@@ -140,7 +140,7 @@ async def scan(event, flags):
         )
     if not approve:
         msg = await System.send_message(
-            Sibyl_logs,
+            Team7_logs,
             scan_request_string.format(
                 enforcer=executor,
                 spammer=sender,
@@ -151,7 +151,7 @@ async def scan(event, flags):
         )
         return
     msg = await System.send_message(
-        Sibyl_logs,
+        Team7_logs,
         forced_scan_string.format(
             ins=executor, spammer=sender, chat=chat, message=replied.text, reason=reason
         ),
@@ -178,7 +178,7 @@ async def revive(event):
     await a.edit("Revert request sent to Slayer. This might take 10minutes or so.")
 
 
-@System.on(system_cmd(pattern=r"sibyl logs"))
+@System.on(system_cmd(pattern=r"team7 logs"))
 async def logs(event):
     await System.send_file(event.chat_id, "log.txt")
 
@@ -248,7 +248,7 @@ async def approve(event, flags):
             else:
                 id1 = list[0]
                 id2 = re.findall(r"(\d+)", replied.text)[1]
-            if id1 in ENFORCERS or SIBYL:
+            if id1 in ENFORCERS or TEAM7:
                 enforcer = id1
                 scam = id2
             else:
@@ -297,7 +297,7 @@ async def reject(event):
         if match:
             # print('Matched OmU')
             id = replied.id
-            await System.edit_message(Sibyl_logs, id, reject_string)
+            await System.edit_message(Team7_logs, id, reject_string)
     orig = re.search(r"t.me/(\w+)/(\d+)", replied.text)
     _orig = re.search(r"t.me/c/(\w+)/(\d+)", replied.text)
     flags, reason = seprate_flags(event.text)
