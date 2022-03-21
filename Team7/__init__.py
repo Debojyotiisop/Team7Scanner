@@ -49,7 +49,7 @@ else:
     ENFORCERS = data["ENFORCERS"]
     INSPECTORS = data["INSPECTORS"]
     Team7_logs = Config.Team7_logs
-    Team7_approved_logs = Config.Team7_approved_logs
+    Team7_Approved_logs = Config.Team7_Approved_logs
     GBAN_MSG_LOGS = Config.GBAN_MSG_LOGS
     BOT_TOKEN = Config.BOT_TOKEN
 
