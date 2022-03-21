@@ -11,7 +11,7 @@ services:
       Inspectors: $Inspectors
       Enforcers: $Enforcers
       Team7_logs: $Team7_logs
-      Team7_Approved_Logs: $Team7_Approved_Logs
+      Team7_Approved_Logs: $Team7_Approved_logs
       GBAN_MSG_LOGS: $GBAN_MSG_LOGS
       BOT_TOKEN: $BOT_TOKEN
       ENV: $ENV
