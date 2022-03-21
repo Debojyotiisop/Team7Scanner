@@ -1,7 +1,7 @@
 from Team7 import MONGO_CLIENT
 from typing import Optional, Dict, Union
 
-db = MONGO_CLIENT["SibylSystemRobot"]["Main"]
+db = MONGO_CLIENT["Team7"]["Main"]
 
 
 async def get_chat(chat: int) -> Optional[Dict[str, Union[str, int]]]:
