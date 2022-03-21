@@ -1,7 +1,7 @@
-from Sibyl_System import System, session, INSPECTORS, ENFORCERS, Sibyl_logs
-from Sibyl_System.strings import proof_string, scan_request_string, reject_string
-from Sibyl_System.plugins.Mongo_DB.gbans import get_gban, get_gban_by_proofid
-import Sibyl_System.plugins.Mongo_DB.bot_settings as db
+from Team7 import System, session, INSPECTORS, ENFORCERS, Team7_logs
+from Team7.strings import proof_string, scan_request_string, reject_string
+from Team7.plugins.Mongo_DB.gbans import get_gban, get_gban_by_proofid
+import Team7.plugins.Mongo_DB.bot_settings as db
 
 from telethon import events, custom
 
@@ -158,7 +158,7 @@ async def inline_handler(event):
     split = query.split(" ", 1)
     if event.query.user_id not in INSPECTORS:
         result = builder.article(
-            "Sibyl System", text="You don't have access to this cmd."
+            "Team7 System", text="You don't have access to this cmd."
         )
         await event.answer([result])
         return
