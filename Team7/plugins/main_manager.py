@@ -125,7 +125,7 @@ async def scan(event, flags):
     else:
         approve = False
     if replied.media:
-        await replied.forward_to(Sibyl_logs)
+        await replied.forward_to(Team7_logs)
     executor = f"[{executer.first_name}](tg://user?id={executer.id})"
     chat = (
         f"t.me/{event.chat.username}/{event.message.id}"
@@ -134,7 +134,7 @@ async def scan(event, flags):
     )
     await event.reply("Connecting to Oraizon for a cymatic scan.")
     if req_proof and req_user:
-        await replied.forward_to(Sibyl_logs)
+        await replied.forward_to(Team7_logs)
         await System.gban(
             executer.id, req_user, reason, msg.id, executer, message=replied.text
         )
