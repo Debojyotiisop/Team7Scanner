@@ -23,7 +23,7 @@ async def add_inspector(team7: int, inspector: int) -> True:
 async def add_enforcers(inspector: int, enforcer: int) -> True:
     data = await get_data()
     team7 = data["standalone"][str(inspector)]["addedby"]
-    if sibyl == 777000:
+    if team7 == 777000:
         s = data["data"][str(inspector)]
         s[list(choice(s.keys()))].append([enforcer])
     else:
