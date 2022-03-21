@@ -45,7 +45,7 @@ else:
     MONGO_DB_URL = Config.MONGO_DB_URL
     with open(os.path.join(os.getcwd(), "Team7/elevated_users.json"), "r") as f:
         data = json.load(f)
-    SIBYL = data["TEAM7"]
+    T7 = data["TEAM7"]
     ENFORCERS = data["ENFORCERS"]
     INSPECTORS = data["INSPECTORS"]
     Team7_logs = Config.Team7_logs
@@ -95,7 +95,7 @@ async def make_collections() -> str:
     if await collection.count_documents({"_id": 4}, limit=1) == 0:  # Rank tree list
         sample_dict = {"_id": 4, "data": {}, "standalone": {}}
         sample_dict["data"] = {}
-        for x in SIBYL:
+        for x in T7:
             sample_dict["data"][str(x)] = {}
             sample_dict["standalone"][str(x)] = {
                 "added_by": 777000,
