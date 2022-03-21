@@ -1,5 +1,5 @@
 FROM debian:latest
-FROM python:3.9.1-slim-buster
+FROM python:3.9.6-slim-buster
 RUN apt update && apt upgrade -y
 RUN apt install git curl python3-pip -y
 RUN pip3 install -U pip
