@@ -10,7 +10,7 @@ from .utils import FlagParser, ParseError
 
 from Team7 import (
     Team7_logs,
-    Team7_approved_logs,
+    Team7_Approved_logs,
     GBAN_MSG_LOGS,
     BOT_TOKEN,
     API_ID_KEY,
@@ -25,7 +25,7 @@ class Team7Client(TelegramClient):
     def __init__(self, *args, **kwargs):
         """Declare stuff."""
         self.gban_logs = GBAN_MSG_LOGS
-        self.approved_logs = Team7_approved_logs
+        self.approved_logs = Team7_Approved_logs
         self.log = Team7_logs
         self.bot = None
         self.processing = 0
@@ -106,7 +106,7 @@ class Team7Client(TelegramClient):
             )
         if bot:
             await self.send_message(
-                Team7_approved_logs,
+                Team7_Approved_logs,
                 bot_gban_string.format(enforcer=enforcer, scam=target, reason=reason),
             )
         else:
