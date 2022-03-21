@@ -8,32 +8,32 @@ from .strings import (
 )
 from .utils import FlagParser, ParseError
 
-from Sibyl_System import (
-    Sibyl_logs,
-    Sibyl_approved_logs,
+from Team7_System import (
+    Team7_logs,
+    Team7_approved_logs,
     GBAN_MSG_LOGS,
     BOT_TOKEN,
     API_ID_KEY,
     API_HASH_KEY,
 )
-from Sibyl_System.plugins.Mongo_DB.gbans import update_gban, delete_gban
+from Team7_System.plugins.Mongo_DB.gbans import update_gban, delete_gban
 
 
-class SibylClient(TelegramClient):
-    """SibylClient - Subclass of Telegram Client."""
+class Team7Client(TelegramClient):
+    """Team7Client - Subclass of Telegram Client."""
 
     def __init__(self, *args, **kwargs):
         """Declare stuff."""
         self.gban_logs = GBAN_MSG_LOGS
-        self.approved_logs = Sibyl_approved_logs
-        self.log = Sibyl_logs
+        self.approved_logs = Team7_approved_logs
+        self.log = Team7_logs
         self.bot = None
         self.processing = 0
         self.processed = 0
         self.groups = {}
         if BOT_TOKEN:
             self.bot = TelegramClient(
-                "SibylSystem", api_id=API_ID_KEY, api_hash=API_HASH_KEY
+                "Team7System", api_id=API_ID_KEY, api_hash=API_HASH_KEY
             ).start(bot_token=BOT_TOKEN)
         super().__init__(*args, **kwargs)
 
@@ -106,12 +106,12 @@ class SibylClient(TelegramClient):
             )
         if bot:
             await self.send_message(
-                Sibyl_approved_logs,
+                Team7_approved_logs,
                 bot_gban_string.format(enforcer=enforcer, scam=target, reason=reason),
             )
         else:
             await self.send_message(
-                Sibyl_approved_logs,
+                Team7_approved_logs,
                 scan_approved_string.format(
                     enforcer=enforcer, scam=target, reason=reason, proof_id=msg_id
                 ),
