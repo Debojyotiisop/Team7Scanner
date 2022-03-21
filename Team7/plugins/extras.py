@@ -3,10 +3,10 @@ from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl.functions.channels import JoinChannelRequest
 from telethon.tl.functions.messages import ImportChatInviteRequest
 
-from Sibyl_System.plugins.Mongo_DB.tree import add_inspector, add_enforcers, get_data
-from Sibyl_System import ENFORCERS, INSPECTORS, SIBYL, session
-from Sibyl_System import System, system_cmd
-from Sibyl_System import Sibyl_logs
+from Team7.plugins.Mongo_DB.tree import add_inspector, add_enforcers, get_data
+from Team7 import ENFORCERS, INSPECTORS, TEAM7, session
+from Team7 import System, system_cmd
+from Team7 import Team7_logs
 
 from datetime import datetime
 from urllib.parse import urlparse, urlunparse
@@ -16,7 +16,7 @@ import re
 import json
 
 try:
-    from Sibyl_System import HEROKU_API_KEY, HEROKU_APP_NAME
+    from Team7_System import HEROKU_API_KEY, HEROKU_APP_NAME
 
     heroku_conn = heroku3.from_key(HEROKU_API_KEY)
     app = heroku_conn.app(HEROKU_APP_NAME)
@@ -25,7 +25,7 @@ try:
 except BaseException:
     HEROKU = False
 
-json_file = os.path.join(os.getcwd(), "Sibyl_System/elevated_users.json")
+json_file = os.path.join(os.getcwd(), "Team7/elevated_users.json")
 
 
 @System.on(system_cmd(pattern=r"addenf", allow_inspectors=True))
@@ -134,14 +134,14 @@ async def join(event) -> None:
         await System(ImportChatInviteRequest(private.group(5)))
         await System.send_message(event.chat_id, "Joined chat!")
         await System.send_message(
-            Sibyl_logs,
+            Team7_logs,
             f"{(await event.get_sender()).first_name} made Sylviorus join {private.group(5)}",
         )
     else:
         await System(JoinChannelRequest(link))
         await System.send_message(event.chat_id, "Joined chat!")
         await System.send_message(
-            Sibyl_logs,
+            Team7_logs,
             f"{(await event.get_sender()).first_name} made Sylviorus join {link}",
         )
 
@@ -281,11 +281,11 @@ async def leave(event) -> None:
     if c_id:
         await System(LeaveChannelRequest(int(c_id.group(0))))
         await System.send_message(
-            event.chat_id, f"Sibyl has left chat with id[-{c_id.group(1)}]"
+            event.chat_id, f"Team7 Scanner has left chat with id[-{c_id.group(1)}]"
         )
     else:
         await System(LeaveChannelRequest(link))
-        await System.send_message(event.chat_id, f"Sibyl has left chat[{link}]")
+        await System.send_message(event.chat_id, f"Team7 Scanner has left chat[{link}]")
 
 
 @System.on(system_cmd(pattern=r"get_redirect ", allow_inspectors=True))
