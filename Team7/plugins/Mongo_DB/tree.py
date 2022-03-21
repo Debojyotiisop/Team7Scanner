@@ -2,7 +2,7 @@ from Team7 import MONGO_CLIENT
 from datetime import datetime
 from random import choice
 
-db = MONGO_CLIENT["Sibyl"]["Main"]
+db = MONGO_CLIENT["Team7"]["Main"]
 
 
 async def get_data() -> dict:
