@@ -106,7 +106,7 @@ class Team7Client(TelegramClient):
             )
         if bot:
             await self.send_message(
-                Team7_Approved_logs,
+                Team7_approved_logs,
                 bot_gban_string.format(enforcer=enforcer, scam=target, reason=reason),
             )
         else:
