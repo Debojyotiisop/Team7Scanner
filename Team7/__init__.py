@@ -45,7 +45,7 @@ else:
     MONGO_DB_URL = Config.MONGO_DB_URL
     with open(os.path.join(os.getcwd(), "Team7/elevated_users.json"), "r") as f:
         data = json.load(f)
-    T7 = data["TEAM7"]
+    TEAM7 = data["TEAM7"]
     ENFORCERS = data["ENFORCERS"]
     INSPECTORS = data["INSPECTORS"]
     Team7_logs = Config.Team7_logs
