@@ -68,7 +68,7 @@ System = Team7Client(StringSession(STRING_SESSION), API_ID_KEY, API_HASH_KEY)
 #    print(traceback.format_exc())
  #   exit(1)
 
-collection = MONGO_CLIENT["TEAM7"]["Main"]
+collection = MONGO_CLIENT["Team7"]["Main"]
 
 
 async def make_collections() -> str:
