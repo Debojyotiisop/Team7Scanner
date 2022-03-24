@@ -60,7 +60,7 @@ async def status(event):
     await msg.edit("🔰🔰VERIFIED🔰🔰")
     time.sleep(2)
     senderx = await event.get_sender()
-    if event.sender.id in SIBYL:
+    if event.sender.id in TEAM7:
         user_status = "**Developer**"
     elif event.sender.id in INSPECTORS:
         user_status = "**Inspector**"
