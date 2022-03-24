@@ -70,6 +70,7 @@ class Team7Client(TelegramClient):
 
         return _on
 
+
     async def gban(
         self,
         enforcer=None,
