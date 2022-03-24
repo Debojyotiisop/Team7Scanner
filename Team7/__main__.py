@@ -65,7 +65,7 @@ async def status(event):
     elif event.sender.id in INSPECTORS:
         user_status = "**Inspector**"
     else: 
-        user_status = "**unauthorized User**"
+        user_status = "**Enforcer**"
     time.sleep(1)
     await msg.edit(on_string.format(Enforcer=user_status, name=senderx.first_name))
 
