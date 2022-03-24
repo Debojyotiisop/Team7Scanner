@@ -11,7 +11,8 @@ from Team7.utils import seprate_flags, Flag
 import re
 
 
-url_regex = re.compile("(http(s)?://)?t.me/(c/)?(\w+)/(\d+)")
+tgurl_regex = re.compile("(http(s)?://)?t.me/(c/)?(\w+)/(\d+)")
+url_regex = re.compile("(https?)?(://)?(\w+\.)?(\w+\.\w+)(/.*)?")
 
 
 def get_data_from_url(url: str) -> tuple:
@@ -20,10 +21,52 @@ def get_data_from_url(url: str) -> tuple:
     (1476401326, 36963)
     """
 
-    match = url_regex.match(url)
+    match = tgurl_regex.match(url)
     if not match:
         return False
     return (match.group(4), match.group(5))
+
+def parse_url(url: str):
+    match = url_regex.match(url)
+    if not match:
+        return False
+    return {"full": match.group(0), "protocol": match.group(1), "domain": match.group(4), "path": match.group(5) or "/"}
+
+def find_urls(string, exclude_telegram=False):
+    match = url_regex.findall(string)
+    if exclude_telegram:
+        for m in match:
+            if "telegram.me" in m or "t.me" in m:
+                match.remove(m)
+    if not match:
+        return None
+    return [parse_url("".join(m)) for m in match]
+
+def getChatEntity(string):
+    string = str(string)
+    if string.startswith("-100"):
+        string = string.replace("-100", "", 1)
+    try:
+        return int(string)
+    except:
+        return string
+    
+async def get_chat_creator_and_admins(event, chat_id, need_admins=False):
+    creator = 0
+    admins = ""
+    async for user in event.client.iter_participants(chat_id, filter=ChannelParticipantsAdmins):
+        if isinstance(user.participant, ChannelParticipantCreator):
+            creator = user.id
+            if not need_admins:
+                return creator
+        admins += f"\n{user.id}"
+    return creator, admins
+
+async def is_member(event, chat_id, user_id):
+    async for user in event.client.iter_participants(chat_id):
+        if user.id == user_id:
+            return True
+    return False
 
 
 @System.command(
@@ -132,7 +175,7 @@ async def scan(event, flags):
         if event.chat.username
         else f"t.me/c/{event.chat.id}/{event.message.id}"
     )
-    await event.reply("Connecting to Oraizon for a cymatic scan.")
+    await event.reply("Connecting to TEAM7 Server for a cymatic scan.")
     if req_proof and req_user:
         await replied.forward_to(Team7_logs)
         await System.gban(
@@ -178,7 +221,7 @@ async def revive(event):
     await a.edit("Revert request sent to Slayer. This might take 10minutes or so.")
 
 
-@System.on(system_cmd(pattern=r"team7 logs"))
+@System.on(system_cmd(pattern=r"logs"))
 async def logs(event):
     await System.send_file(event.chat_id, "log.txt")
 
@@ -279,7 +322,7 @@ async def approve(event, flags):
                         return
                     await System.send_message(
                         orig.group(1),
-                        "User is a target for enforcement action.\nEnforcement Mode: Lethal Eliminator",
+                        "User is a target for enforcement action.\n Lethal Eliminator",
                         reply_to=int(orig.group(2)),
                     )
                 except:
@@ -298,23 +341,50 @@ async def reject(event):
             # print('Matched OmU')
             id = replied.id
             await System.edit_message(Team7_logs, id, reject_string)
+    if re.match(r"\$REVERT", replied.text):
+        if not replied.id in revert_request:
+            await event.reply("This revert request has expired!")
+            return
+        info = revert_request[replied.id]
+        del revert_request[replied.id]
+        await System.send_message(
+            getChatEntity(info["chat_id"]),
+            "Your revert requested is rejected.",
+            reply_to=info["msg_id"],
+            link_preview=False
+        )
+        await System.edit_message(Team7_logs, replied.id, revert_reject_string)
+        return
     orig = re.search(r"t.me/(\w+)/(\d+)", replied.text)
     _orig = re.search(r"t.me/c/(\w+)/(\d+)", replied.text)
-    flags, reason = seprate_flags(event.text)
-    if _orig and "r" in flags.keys():
-        await System.send_message(
-            int(_orig.group(1)),
-            f'Crime coefficient less than 100\nUser is not a target for enforcement action\nTrigger of dominator will be locked.\nReason: **{reason.split(" ", 1)[1].strip()}**',
-            reply_to=int(_orig.group(2)),
-        )
+    reason = seprate_flags(event.text)
+    reason = reason.split(None, 1)
+    if orig:
+        origchat = orig.group(1)
+        origreply = int(orig.group(2))
+    elif _orig:
+        origchat = int(_orig.group(1))
+        origreply = int(_orig.group(2))
+    else:
         return
-    if orig and "r" in flags.keys():
-        await System.send_message(
-            orig.group(1),
-            f'Crime coefficient less than 100\nUser is not a target for enforcement action\nTrigger of dominator will be locked.\nReason: **{reason.split(" ", 1)[1].strip()}**',
-            reply_to=int(orig.group(2)),
-        )
+    text = "Crime coefficient less than 100!\nUser is not a target for enforcement action, Trigger of dominator will be locked."
+    text = text.replace("User", "Chat")
+    origreply = info["msg_id"]
+    origchat = info["chat_id"]
+    try:
+        await System.edit_message(Team7_logs, replied.id, reject_string)
+    except:
+          pass
+    
+    if len(reason) > 1:
+        text += f"\nReason: `{reason[1].strip()}`"
 
+    await System.send_message(
+        origchat,
+        text,
+        reply_to=origreply,
+        link_preview=False
+    )
 
 help_plus = """
 Here is the help for **Main**:
