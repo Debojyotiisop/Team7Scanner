@@ -5,6 +5,7 @@ from Team7 import (
     INSPECTORS,
     ENFORCERS,
     Team7_logs,
+    TEAM7,
 )
 from Team7.strings import on_string
 import logging
