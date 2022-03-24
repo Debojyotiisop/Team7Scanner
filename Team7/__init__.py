@@ -62,13 +62,13 @@ MONGO_CLIENT = motor_asyncio.AsyncIOMotorClient(MONGO_DB_URL)
 
 from .client_class import Team7Client
 
-try:
-    System = Team7Client(StringSession(STRING_SESSION), API_ID_KEY, API_HASH_KEY)
-except:
-    print(traceback.format_exc())
-    exit(1)
+#try:
+System = Team7Client(StringSession(STRING_SESSION), API_ID_KEY, API_HASH_KEY)
+#except:
+#    print(traceback.format_exc())
+ #   exit(1)
 
-collection = MONGO_CLIENT["Team7"]["Main"]
+collection = MONGO_CLIENT["TEAM7"]["Main"]
 
 
 async def make_collections() -> str:
@@ -107,7 +107,7 @@ async def make_collections() -> str:
 
 def system_cmd(
     pattern=None,
-    allow_team7=True,
+    allow_TEAM7=True,
     allow_enforcer=False,
     allow_inspectors=False,
     allow_slash=True,
@@ -118,9 +118,9 @@ def system_cmd(
         args["pattern"] = re.compile(r"[\?\.!/](" + pattern + r")(?!@)")
     else:
         args["pattern"] = re.compile(r"[\?\.!]" + pattern)
-    if allow_team7 and allow_enforcer:
+    if allow_TEAM7 and allow_enforcer:
         args["from_users"] = ENFORCERS
-    elif allow_inspectors and allow_team7:
+    elif allow_inspectors and allow_TEAM7:
         args["from_users"] = INSPECTORS
     else:
         args["from_users"] = TEAM7
