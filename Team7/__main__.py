@@ -41,7 +41,7 @@ for load in to_load:
         print("------------------------------------")
 
 
-@System.on(system_cmd(pattern=r"t7info", allow_enforcer=True))
+@System.on(system_cmd(pattern=r"t7info", allow_enforcer=True,allow_inspectors=True))
 async def status(event):
     msg = await event.reply("Conecting to Slayer System.")
     time.sleep(1)
@@ -59,10 +59,16 @@ async def status(event):
     time.sleep(1)
     await msg.edit("🔰🔰VERIFIED🔰🔰")
     time.sleep(2)
-    sender = await event.get_sender()
-    user_status = "Inspector" if sender.id in INSPECTORS else "Enforcer"
+    senderx = await event.get_sender()
+    if event.sender.id in SIBYL:
+        user_status = "**Developer**"
+    elif event.sender.id in INSPECTORS:
+        user_status = "**Inspector**"
+    else: 
+        user_status = "**unauthorized User**"
     time.sleep(1)
-    await msg.edit(on_string.format(Enforcer=user_status, name=sender.first_name))
+    await msg.edit(on_string.format(Enforcer=user_status, name=senderx.first_name))
+
 
 
 @System.on(system_cmd(pattern="t7stats"))
