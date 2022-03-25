@@ -67,7 +67,7 @@ async def make_proof(user: Union[str, int]):
     )
 
 
-@System.bot.on(filters.command(pattern="[/!]start"))
+@System.bot.on(filters.command(pattern="start"))
 async def start(_, message):
         if message.chat.type != "private":
                 return await message.reply(
