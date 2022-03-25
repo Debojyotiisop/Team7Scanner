@@ -1,4 +1,4 @@
-from Team7 import Sibyl_logs, ENFORCERS, TEAM7, INSPECTORS
+from Team7 import Sibyl_logs, ENFORCERS, SIBYL, INSPECTORS
 from Team7.strings import (
     scan_request_string,
     reject_string,
