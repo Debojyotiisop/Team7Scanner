@@ -8,7 +8,7 @@ from .strings import (
 )
 from .utils import FlagParser, ParseError
 
-from Sibyl_System import (
+from Team7 import (
     Sibyl_logs,
     Sibyl_approved_logs,
     GBAN_MSG_LOGS,
