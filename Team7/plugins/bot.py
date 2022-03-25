@@ -2,7 +2,7 @@ from Team7 import System, session, INSPECTORS, ENFORCERS, Sibyl_logs
 from Team7.strings import proof_string, scan_request_string, reject_string
 from Team7.plugins.Mongo_DB.gbans import get_gban, get_gban_by_proofid
 import Team7.plugins.Mongo_DB.bot_settings as db
-from Team7 import Pbot as app
+from Team7 import pbot as app
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram import filters, idle
 from telethon import events, custom
