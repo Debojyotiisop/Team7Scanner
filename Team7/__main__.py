@@ -7,7 +7,7 @@ from Team7 import (
     Sibyl_logs,
 )
 from telethon import TelegramClient, events, Button, types, functions, errors
-from Sibyl_System.strings import on_string
+from Team7.strings import on_string
 import logging
 import importlib
 import asyncio
