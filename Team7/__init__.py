@@ -31,14 +31,14 @@ if ENV:
     STRING_SESSION = os.environ.get("STRING_SESSION")
     HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY")
     HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME")
-    RAW_TEAM7 = os.environ.get("TEAM7", "")
+    RAW_SIBYL = os.environ.get("SIBYL", "")
     RAW_ENFORCERS = os.environ.get("ENFORCERS", "")
-    TEAM7 = [int(x) for x in os.environ.get("TEAM7", "").split()]
+    SIBYL = [int(x) for x in os.environ.get("SIBYL", "").split()]
     INSPECTORS = [int(x) for x in os.environ.get("INSPECTORS", "").split()]
     ENFORCERS = [int(x) for x in os.environ.get("ENFORCERS", "").split()]
     MONGO_DB_URL = os.environ.get("MONGO_DB_URL")
-    Team7_logs = int(os.environ.get("Team7_logs"))
-    Team7_approved_logs = int(os.environ.get("Team7_Approved_Logs"))
+    Sibyl_logs = int(os.environ.get("Sibyl_logs"))
+    Sibyl_approved_logs = int(os.environ.get("Sibyl_Approved_Logs"))
     GBAN_MSG_LOGS = [int(x) for x in os.environ.get("GBAN_MSG_LOGS", "").split()]
     GBAN_MSG_LOGS1 = "-1001580719176"
     BOT_TOKEN = os.environ.get("BOT_TOKEN")
@@ -51,11 +51,11 @@ else:
     MONGO_DB_URL = Config.MONGO_DB_URL
     with open(os.path.join(os.getcwd(), "Team7/elevated_users.json"), "r") as f:
         data = json.load(f)
-    TEAM7 = data["TEAM7"]
+    SIBYL = data["SIBYL"]
     ENFORCERS = data["ENFORCERS"]
     INSPECTORS = data["INSPECTORS"]
-    TEAM7_logs = Config.Team7_logs
-    Team7_approved_logs = Config.Team7_approved_logs
+    Sibyl_logs = Config.Sibyl_logs
+    Sibyl_approved_logs = Config.Sibyl_approved_logs
     GBAN_MSG_LOGS = Config.GBAN_MSG_LOGS
     BOT_TOKEN = Config.BOT_TOKEN
 
@@ -74,7 +74,7 @@ except:
     print(traceback.format_exc())
     exit(1)
 
-collection = MONGO_CLIENT["Team7"]["Main"]
+collection = MONGO_CLIENT["Sibyl"]["Main"]
 
 
 pbot = Client(
