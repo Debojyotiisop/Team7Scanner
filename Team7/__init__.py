@@ -77,15 +77,25 @@ except:
 collection = MONGO_CLIENT["Team7"]["Main"]
 
 
-Pbot = Client("Pbot",bot_token = os.environ["BOT_TOKEN"],api_id = int(os.environ["API_ID_KEY"]),api_hash = os.environ["API_HASH_KEY"])
+pbot = Client(
 
-try:
-        pbot.start()
-        except (ApiIdInvalid, ApiIdPublishedFlood):
-            raise Exception("In valid data in api or hash")
-        except AccessTokenInvalid:
-            raise Exception("Token expire.")
-        
+    ":memory:",
+
+    api_id=API_ID,
+
+    api_hash=API_HASH,
+
+    bot_token=TOKEN,
+
+    workers=min(32, os.cpu_count() + 4),
+
+)
+
+apps = []
+
+apps.append(pbot)
+
+loop = asyncio.get_event_loop()
 
 
 async def make_collections() -> str:
