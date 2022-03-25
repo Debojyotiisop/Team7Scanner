@@ -141,7 +141,7 @@ async def join(event) -> None:
         await System(JoinChannelRequest(link))
         await System.send_message(event.chat_id, "Joined chat!")
         await System.send_message(
-            Team7_logs,
+            Sibyl_logs,
             f"{(await event.get_sender()).first_name} made Team7 join {link}",
         )
 
