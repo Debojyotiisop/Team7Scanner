@@ -8,9 +8,9 @@ from .strings import (
 )
 from .utils import FlagParser, ParseError
 
-from Team7 import (
-    Team7_logs,
-    Team7_Approved_logs,
+from Sibyl_System import (
+    Sibyl_logs,
+    Sibyl_approved_logs,
     GBAN_MSG_LOGS,
     BOT_TOKEN,
     API_ID_KEY,
@@ -19,21 +19,21 @@ from Team7 import (
 from Team7.plugins.Mongo_DB.gbans import update_gban, delete_gban
 
 
-class Team7Client(TelegramClient):
-    """Team7Client - Subclass of Telegram Client."""
+class SibylClient(TelegramClient):
+    """SibylClient - Subclass of Telegram Client."""
 
     def __init__(self, *args, **kwargs):
         """Declare stuff."""
         self.gban_logs = GBAN_MSG_LOGS
-        self.approved_logs = Team7_Approved_logs
-        self.log = Team7_logs
+        self.approved_logs = Sibyl_approved_logs
+        self.log = Sibyl_logs
         self.bot = None
         self.processing = 0
         self.processed = 0
         self.groups = {}
         if BOT_TOKEN:
             self.bot = TelegramClient(
-                "Team7System", api_id=API_ID_KEY, api_hash=API_HASH_KEY
+                "SibylSystem", api_id=API_ID_KEY, api_hash=API_HASH_KEY
             ).start(bot_token=BOT_TOKEN)
         super().__init__(*args, **kwargs)
 
@@ -51,9 +51,8 @@ class Team7Client(TelegramClient):
                 try:
                     if allow_unknown:
                         flags, unknown = parser.parse(split[1], known=True)
-                        if unknown:
-                            if any([x for x in unknown if '-' in x]):
-                                parser.parse(split[1]) # Trigger the error because unknown args are not allowed to have - in them.
+                        if unknown and any(x for x in unknown if '-' in x):
+                            parser.parse(split[1]) # Trigger the error because unknown args are not allowed to have - in them.
                     else:
                         flags = parser.parse(split[1])
                 except ParseError as exce:
@@ -70,7 +69,6 @@ class Team7Client(TelegramClient):
 
         return _on
 
-
     async def gban(
         self,
         enforcer=None,
@@ -83,36 +81,34 @@ class Team7Client(TelegramClient):
         message=False,
     ) -> bool:
         """Gbans & Fbans user."""
-        if self.gban_logs:
-            logs = self.gban_logs
-        else:
-            logs = self.log
-        if not auto:
-            await self.send_message(
-                logs,
-                f"/gban [{target}](tg://user?id={target}) {reason} // By {enforcer} | #{msg_id}",
-            )
-            await self.send_message(
-                logs,
-                f"/fban [{target}](tg://user?id={target}) {reason} // By {enforcer} | #{msg_id}",
-            )
-        else:
-            await self.send_message(
-                logs,
-                f"/gban [{target}](tg://user?id={target}) Auto Gban[${msg_id}] {reason}",
-            )
-            await self.send_message(
-                logs,
-                f"/fban [{target}](tg://user?id={target}) Auto Gban[${msg_id}] {reason}",
-            )
+        logs = self.gban_logs or self.log
+        for i in logs:
+            if not auto:
+                    await self.send_message(
+                    i,
+                    f"/gban [{target}](tg://user?id={target}) {reason} // By {enforcer} | #{msg_id}",
+                )
+                    await self.send_message(
+                    i,
+                    f"/fban [{target}](tg://user?id={target}) {reason} // By {enforcer} | #{msg_id}",
+                )
+            else:
+                    await self.send_message(
+                    i,
+                    f"/gban [{target}](tg://user?id={target}) Auto Gban[${msg_id}] {reason}",
+                )
+                    await self.send_message(
+                    i,
+                    f"/fban [{target}](tg://user?id={target}) Auto Gban[${msg_id}] {reason}",
+                )
         if bot:
             await self.send_message(
-                Team7_approved_logs,
+                Sibyl_approved_logs,
                 bot_gban_string.format(enforcer=enforcer, scam=target, reason=reason),
             )
         else:
             await self.send_message(
-                Team7_approved_logs,
+                Sibyl_approved_logs,
                 scan_approved_string.format(
                     enforcer=enforcer, scam=target, reason=reason, proof_id=msg_id
                 ),
@@ -128,16 +124,13 @@ class Team7Client(TelegramClient):
         )
 
     async def ungban(self, target: int = None, reason: str = None) -> bool:
-        if self.gban_logs:
-            logs = self.gban_logs
-        else:
-            logs = self.log
-        if not (await delete_gban(target)):
-            return False
-        await self.send_message(
-            logs, f"/ungban [{target}](tg://user?id={target}) {reason}"
+        logs = self.gban_logs or self.log
+        for i in logs:
+            await self.send_message(
+            i, f"/ungban [{target}](tg://user?id={target}) {reason}"
         )
-        await self.send_message(
-            logs, f"/unfban [{target}](tg://user?id={target}) {reason}"
+        for i in logs:
+            await self.send_message(
+            i, f"/unfban [{target}](tg://user?id={target}) {reason}"
         )
         return True
