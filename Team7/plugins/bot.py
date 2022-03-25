@@ -4,7 +4,7 @@ from Team7.plugins.Mongo_DB.gbans import get_gban, get_gban_by_proofid
 import Team7.plugins.Mongo_DB.bot_settings as db
 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-
+from pyrogram import filters, idle
 from telethon import events, custom
 
 from typing import Union
