@@ -81,10 +81,10 @@ Pbot = Client("Pbot",bot_token = os.environ["BOT_TOKEN"],api_id = int(os.environ
 
 try:
         pbot.start()
-    except (ApiIdInvalid, ApiIdPublishedFlood):
-        raise Exception("In valid data in api or hash")
-    except AccessTokenInvalid:
-        raise Exception("Token expire.")
+        except (ApiIdInvalid, ApiIdPublishedFlood):
+            raise Exception("In valid data in api or hash")
+        except AccessTokenInvalid:
+            raise Exception("Token expire.")
         
 
 
