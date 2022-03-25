@@ -47,7 +47,7 @@ for load in to_load:
 
 
         
-@System.on(system_cmd(pattern="t7stats"))
+@System.on(system_cmd(pattern="t7stats"allow_inspectors=True, allow_enforcer=True))
 async def stats(event):
     msg = f"Processed {System.processed} messages since last restart."
     msg += f"\n{len(ENFORCERS)} Enforcers & {len(INSPECTORS)} Inspectors"
@@ -93,32 +93,16 @@ async def status(event):
 
     
     
-@System.on(system_cmd(pattern=r"status", allow_enforcer=True))
-async def status(event):
-    msg = await event.reply("Hold on have Give me a second Featching the Node Status.")
-    time.sleep(1)
-    await msg.edit("Processing ■□□□□□")
-    time.sleep(1)
-    await msg.edit("Processing ■■□□□□")
-    time.sleep(1)
-    await msg.edit("Processing ■■■□□□")
-    time.sleep(1)
-    await msg.edit("Processing ■■■■□□")
-    time.sleep(1)
-    await msg.edit("Processing ■■■■■□")
-    time.sleep(1)
-    await msg.edit("Current Node Status")
-    time.sleep(1)
-    await msg.edit("*Version = v16.9.1\n\n*Codename = Gallium\n\n*Status = LTS\n\n*Total Core = 2")
-    time.sleep(2)
-    sender = await event.get_sender()
-    user_status = "Inspector" if sender.id in INSPECTORS else "Enforcer"
-    time.sleep(1)
-    await msg.edit("¤ Working on Node 13.7\n\n¤ Python Version {ver}\n\n¤Telegram Version {vers}.")    
+  
 
+start_msg = """Hi {user}!
+**Myself T7Scanner , mainly focused on working to reduce spam and scam .**
+**__I can__**:
+- __Auto detect illigal activity of telegram requests.__
+- __Auto Push and release Watch From Gban System Requests.__
+`Click the below button to know how to use me!`"""
 
-
-@System.on(system_cmd(pattern=r"axel", allow_slash=False, allow_inspectors=True))
+@System.on(system_cmd(pattern=r"start", allow_slash=False, allow_inspectors=True))
 async def send_help(event):
     from_ = await System.get_entity(event.sender_id)
     await event.reply(
@@ -130,7 +114,7 @@ async def send_help(event):
     
     
     
-@System.on(system_cmd(pattern="stats"))
+@System.on(system_cmd(pattern="stats"allow_inspectors=True, allow_enforcer=True))
 async def stats(event):
     msg = f"Processed {System.processed} messages since last restart."
     msg += f"\n{len(ENFORCERS)} Enforcers & {len(INSPECTORS)} Inspectors"
