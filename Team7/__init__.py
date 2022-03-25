@@ -148,7 +148,7 @@ def system_cmd(
         args["pattern"] = re.compile(r"[\?\.!]" + pattern)
     if allow_sibyl and allow_enforcer:
         args["from_users"] = ENFORCERS
-    elif allow_inspectors and allow_team7:
+    elif allow_inspectors and allow_sibyl:
         args["from_users"] = INSPECTORS
     else:
         args["from_users"] = TEAM7
