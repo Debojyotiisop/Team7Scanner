@@ -72,7 +72,7 @@ except:
     print(traceback.format_exc())
     exit(1)
 
-collection = MONGO_CLIENT["Sibyl"]["Main"]
+collection = MONGO_CLIENT["Team7"]["Main"]
 
 
 async def make_collections() -> str:
