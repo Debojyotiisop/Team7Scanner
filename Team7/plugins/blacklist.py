@@ -1,4 +1,4 @@
-from Team7 import System, TEAM7, ENFORCERS, Team7_logs, system_cmd
+from Team7 import System, SIBYL, ENFORCERS, Sibyl_logs, system_cmd
 import re
 import Team7.plugins.Mongo_DB.message_blacklist as db
 import Team7.plugins.Mongo_DB.name_blacklist as wlc_collection
@@ -81,9 +81,9 @@ async def listbl(event):
 @System.bot.on(events.NewMessage(incoming=True))
 async def auto_gban_request(event):
     System.processing += 1
-    if event.sender_id in ENFORCERS or event.sender_id in TEAM7:
+    if event.sender_id in ENFORCERS or event.sender_id in SIBYL:
         return
-    if event.chat_id == Team7_logs:
+    if event.chat_id == Sibyl_logs:
         return
     text = event.text
     words = await db.get_blacklist()
@@ -98,7 +98,7 @@ async def auto_gban_request(event):
                     else f"Occurred in Private Chat - {event.chat.title}"
                 )
                 logmsg = f"""$AUTOSCAN\n**Scanned user:** [{event.from_id.user_id}](tg://user?id={event.from_id.user_id})\n**Reason:** 0x{c}\n**Chat:** {link}\n**Hue Color:** Yellow-green\n**Message:** {event.text}"""
-                await System.send_message(Team7_logs, logmsg)
+                await System.send_message(Sibyl_logs, logmsg)
                 System.processed += 1
                 System.processing -= 1
                 return
@@ -110,7 +110,7 @@ async def auto_gban_request(event):
 async def auto_wlc_gban(event):
     System.processing += 1
     user = await event.get_user()
-    if user.id in ENFORCERS or user.id in TEAM7:
+    if user.id in ENFORCERS or user.id in SIBYL:
         return
     words = await wlc_collection.get_wlc_bl()
     if words:
@@ -122,7 +122,7 @@ async def auto_wlc_gban(event):
             if re.search(pattern, text, flags=re.IGNORECASE):
                 c = words.index(word)
                 logmsg = f"""$AUTOSCAN\n**Scanned user:** [{user.id}](tg://user?id={user.id})\n**Reason:** 1x{c}\n**User joined and blacklisted string in name**\n**Matched String:** {word}\n"""
-                await System.send_message(Team7_logs, logmsg)
+                await System.send_message(Sibyl_logs, logmsg)
                 System.processed += 1
                 System.processing -= 1
                 return
