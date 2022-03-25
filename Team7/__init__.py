@@ -123,7 +123,7 @@ async def make_collections() -> str:
         await collection.insert_one(dictw)
     if await collection.count_documents({"_id": 4}, limit=1) == 0:  # Rank tree list
         sample_dict = {'_id': 4, 'standalone': {}, 'data': {}}
-        for x in TEAM7:
+        for x in SIBYL:
             sample_dict["data"][str(x)] = {}
             sample_dict["standalone"][str(x)] = {
                 "added_by": 777000,
@@ -151,7 +151,7 @@ def system_cmd(
     elif allow_inspectors and allow_sibyl:
         args["from_users"] = INSPECTORS
     else:
-        args["from_users"] = TEAM7
+        args["from_users"] = SIBYL
     if force_reply:
         args["func"] = lambda e: e.is_reply
     return events.NewMessage(**args)
