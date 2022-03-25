@@ -81,11 +81,11 @@ pbot = Client(
 
     ":memory:",
 
-    api_id=API_ID,
+    api_id=API_ID_KEY,
 
-    api_hash=API_HASH,
+    api_hash=API_HASH_KEY,
 
-    bot_token=TOKEN,
+    bot_token=BOT_TOKEN,
 
     workers=min(32, os.cpu_count() + 4),
 
