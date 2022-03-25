@@ -1,4 +1,4 @@
-from Team7 import Team7_logs, ENFORCERS, TEAM7, INSPECTORS
+from Team7 import Sibyl_logs, ENFORCERS, TEAM7, INSPECTORS
 from Team7.strings import (
     scan_request_string,
     reject_string,
@@ -129,7 +129,7 @@ async def scan(event, flags):
         if message.from_id.user_id in ENFORCERS:
             return
         msg = await System.send_message(
-            Team7_logs,
+            Sibyl_logs,
             scan_request_string.format(
                 enforcer=executor,
                 spammer=message.from_id.user_id,
@@ -145,7 +145,7 @@ async def scan(event, flags):
         if replied.fwd_from:
             reply = replied.fwd_from
             target = reply.from_id.user_id
-            if reply.from_id.user_id in ENFORCERS or reply.from_id.user_id in TEAM7:
+            if reply.from_id.user_id in ENFORCERS or reply.from_id.user_id in SIBYL:
                 return
             if not reply.from_id.user_id:
                 await event.reply("Cannot get user ID.")
@@ -168,7 +168,7 @@ async def scan(event, flags):
     else:
         approve = False
     if replied.media:
-        await replied.forward_to(Team7_logs)
+        await replied.forward_to(Sibyl_logs)
     executor = f"[{executer.first_name}](tg://user?id={executer.id})"
     chat = (
         f"t.me/{event.chat.username}/{event.message.id}"
@@ -177,13 +177,13 @@ async def scan(event, flags):
     )
     await event.reply("Connecting to TEAM7 Server for a cymatic scan.")
     if req_proof and req_user:
-        await replied.forward_to(Team7_logs)
+        await replied.forward_to(Sibyl_logs)
         await System.gban(
             executer.id, req_user, reason, msg.id, executer, message=replied.text
         )
     if not approve:
         msg = await System.send_message(
-            Team7_logs,
+            Sibyl_logs,
             scan_request_string.format(
                 enforcer=executor,
                 spammer=sender,
@@ -194,7 +194,7 @@ async def scan(event, flags):
         )
         return
     msg = await System.send_message(
-        Team7_logs,
+        Sibyl_logs,
         forced_scan_string.format(
             ins=executor, spammer=sender, chat=chat, message=replied.text, reason=reason
         ),
@@ -291,7 +291,7 @@ async def approve(event, flags):
             else:
                 id1 = list[0]
                 id2 = re.findall(r"(\d+)", replied.text)[1]
-            if id1 in ENFORCERS or TEAM7:
+            if id1 in ENFORCERS or SIBYL:
                 enforcer = id1
                 scam = id2
             else:
@@ -340,7 +340,7 @@ async def reject(event):
         if match:
             # print('Matched OmU')
             id = replied.id
-            await System.edit_message(Team7_logs, id, reject_string)
+            await System.edit_message(Sibyl_logs, id, reject_string)
     if re.match(r"\$REVERT", replied.text):
         if not replied.id in revert_request:
             await event.reply("This revert request has expired!")
@@ -353,7 +353,7 @@ async def reject(event):
             reply_to=info["msg_id"],
             link_preview=False
         )
-        await System.edit_message(Team7_logs, replied.id, revert_reject_string)
+        await System.edit_message(Sibyl_logs, replied.id, revert_reject_string)
         return
     orig = re.search(r"t.me/(\w+)/(\d+)", replied.text)
     _orig = re.search(r"t.me/c/(\w+)/(\d+)", replied.text)
@@ -372,7 +372,7 @@ async def reject(event):
     origreply = info["msg_id"]
     origchat = info["chat_id"]
     try:
-        await System.edit_message(Team7_logs, replied.id, reject_string)
+        await System.edit_message(Sibyl_logs, replied.id, reject_string)
     except:
           pass
     
