@@ -70,11 +70,10 @@ async def make_proof(user: Union[str, int]):
 @System.bot.on(filters.command(pattern="[/!]start"))
 async def start(_, message):
         if message.chat.type != "private":
-       return await message.reply(
-            "Pm Me For More Details.", reply_markup=keyboard
-        )
-else:
-    await message.reply(home_text_pm, reply_markup=home_text_pm)
+                return await message.reply(
+            "Pm Me For More Details.", reply_markup=keyboard)
+        else:
+                await message.reply(home_text_pm, reply_markup=home_text_pm)
 
 
 @System.bot.on(events.NewMessage(pattern="[/!]alertmode"))
