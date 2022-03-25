@@ -47,7 +47,7 @@ for load in to_load:
 
 
         
-@System.on(system_cmd(pattern="t7stats"allow_inspectors=True, allow_enforcer=True))
+@System.on(system_cmd(pattern="t7stats",allow_inspectors=True, allow_enforcer=True))
 async def stats(event):
     msg = f"Processed {System.processed} messages since last restart."
     msg += f"\n{len(ENFORCERS)} Enforcers & {len(INSPECTORS)} Inspectors"
@@ -114,7 +114,7 @@ async def send_help(event):
     
     
     
-@System.on(system_cmd(pattern="stats"allow_inspectors=True, allow_enforcer=True))
+@System.on(system_cmd(pattern="stats",allow_inspectors=True, allow_enforcer=True))
 async def stats(event):
     msg = f"Processed {System.processed} messages since last restart."
     msg += f"\n{len(ENFORCERS)} Enforcers & {len(INSPECTORS)} Inspectors"
