@@ -7,6 +7,8 @@ from motor import motor_asyncio
 import aiohttp
 import json
 from datetime import datetime
+from pyrogram import Client
+from pyrogram.errors import ApiIdInvalid, ApiIdPublishedFlood, AccessTokenInvalid
 
 import traceback
 import logging
@@ -73,6 +75,17 @@ except:
     exit(1)
 
 collection = MONGO_CLIENT["Team7"]["Main"]
+
+
+Pbot = Client("Pbot",bot_token = os.environ["BOT_TOKEN"],api_id = int(os.environ["API_ID"]),api_hash = os.environ["API_HASH"])
+
+try:
+        pbot.start()
+    except (ApiIdInvalid, ApiIdPublishedFlood):
+        raise Exception("In valid data in api or hash")
+    except AccessTokenInvalid:
+        raise Exception("Token expire.")
+        
 
 
 async def make_collections() -> str:
