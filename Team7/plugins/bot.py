@@ -3,6 +3,8 @@ from Team7.strings import proof_string, scan_request_string, reject_string
 from Team7.plugins.Mongo_DB.gbans import get_gban, get_gban_by_proofid
 import Team7.plugins.Mongo_DB.bot_settings as db
 
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
 from telethon import events, custom
 
 from typing import Union
@@ -13,6 +15,29 @@ import asyncio
 data = []
 DATA_LOCK = asyncio.Lock()
 
+home_text_pm = (
+        f"Hey there! I'm Team7's scanner bot."
+        + "here you can easily go to appeal chat"
+
+)
+keyboard = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton(
+                text="SybilLogs",
+                url=f"https://t.me/Team7SybilLogs",
+            ),
+            InlineKeyboardButton(
+                text="GbanLogs🗒️",
+                url="https://t.me/Team7GbanLogs",
+            ),
+        ],
+        [
+            InlineKeyboardButton(text="AppealChat", url="https://t.me/TG_Power_Fed_007"),
+            InlineKeyboardButton(text="ApprovedLogs", url="https://t.me/Team7SybilApprovedLogs"),
+        ],
+    ]
+)
 
 def can_ban(event):
     status = False
@@ -44,7 +69,11 @@ async def make_proof(user: Union[str, int]):
 
 @System.bot.on(events.NewMessage(pattern="[/!]start"))
 async def sup(event):
-    await event.reply("sup?")
+        if message.chat.type != "private":
+        return await message.reply(
+            "Pm Me For More Details.", reply_markup=keyboard
+        )
+    await message.reply(home_text_pm, reply_markup=home_text_pm)
 
 
 @System.bot.on(events.NewMessage(pattern="[/!]alertmode"))
