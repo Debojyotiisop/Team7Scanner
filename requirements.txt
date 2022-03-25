@@ -5,3 +5,4 @@ motor
 heroku3
 pillow
 dnspython
+pyrogram
