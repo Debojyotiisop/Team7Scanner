@@ -4,5 +4,6 @@ aiohttp
 motor 
 heroku3
 pillow
-dnspython
+dnspython 
+TgCrypto
 pyrogram
