@@ -77,7 +77,7 @@ except:
 collection = MONGO_CLIENT["Team7"]["Main"]
 
 
-Pbot = Client("Pbot",bot_token = os.environ["BOT_TOKEN"],api_id = int(os.environ["API_ID"]),api_hash = os.environ["API_HASH"])
+Pbot = Client("Pbot",bot_token = os.environ["BOT_TOKEN"],api_id = int(os.environ["API_ID_KEY"]),api_hash = os.environ["API_HASH_KEY"])
 
 try:
         pbot.start()
