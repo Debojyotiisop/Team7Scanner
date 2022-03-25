@@ -1,6 +1,6 @@
 on_string = """
- 「 Connected to [Slayer](http://t.me/SlayerAppeal)  」
-        Welcome to Slayer - System
+ 「 Connected to [Team7](http://t.me/Tg_power_fed_007)  」
+        Welcome to Team7 - System
 ➖➖➖➖➖➖➖➖➖➖➖➖➖
  ⭐️⭐️⭐️⭐️⭐️
 • NAME : ㅤ{name}
