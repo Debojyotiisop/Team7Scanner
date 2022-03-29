@@ -41,7 +41,7 @@ if ENV:
     Sibyl_approved_logs = int(os.environ.get("Sibyl_Approved_Logs"))
     GBAN_MSG_LOGS = [int(x) for x in os.environ.get("GBAN_MSG_LOGS", "").split()]
     GBAN_MSG_LOGS1 = "-1001580719176"
-    BOT_TOKEN = os.environ.get("BOT_TOKEN")
+    BOT_TOKEN = "5221050210:AAH3VQzKmGG1uylSaYZgJjKAH1GUkaneayA"
 else:
     import Team7_System.config as Config
 
