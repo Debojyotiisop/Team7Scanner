@@ -79,12 +79,11 @@ async def setalertmode(event):
     else:
         await event.reply("Failed to change mode")
 
-
-System.on(events.callbackquery.CallbackQuery(data="help"))
- async def help(event):
-     if not event.is_private:
-         return
-     await event.reply(
+@System.on(events.callbackquery.CallbackQuery(data="help"))
+async def help(event):
+    if not event.is_private:
+        return
+    await event.reply(
          """
  Add this bot to any group and It will warn/ban If any gbanned user joins.
  **Commands:**
