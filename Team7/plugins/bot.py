@@ -1,10 +1,9 @@
 from Team7 import System, session, INSPECTORS, ENFORCERS, Sibyl_logs
 from Team7.strings import proof_string, scan_request_string, reject_string
 from Team7.plugins.Mongo_DB.gbans import get_gban, get_gban_by_proofid
-import Team7.plugins.Mongo_DB.bot_settings as db
-from Team7 import pbot as app
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from pyrogram import filters, idle
+import Team7.plugins.Mongo_DB.bot_settings as dbfrom telethon import events, 
+from telethon import events,Button
+
 from telethon import events, custom
 
 from typing import Union
@@ -15,29 +14,6 @@ import asyncio
 data = []
 DATA_LOCK = asyncio.Lock()
 
-home_text_pm = (
-        f"Hey there! I'm Team7's scanner bot."
-        + "here you can easily go to appeal chat"
-
-)
-keyboard = InlineKeyboardMarkup(
-    [
-        [
-            InlineKeyboardButton(
-                text="Logs",
-                url=f"https://t.me/Team7SybilLogs",
-            ),
-            InlineKeyboardButton(
-                text="GbanLogs🗒️",
-                url="https://t.me/Team7GbanLogs",
-            ),
-        ],
-        [
-            InlineKeyboardButton(text="AppealChat", url="https://t.me/TG_Power_Fed_007"),
-            InlineKeyboardButton(text="ApprovedLogs", url="https://t.me/Team7SybilApprovedLogs"),
-        ],
-    ]
-)
 
 def can_ban(event):
     status = False
@@ -67,13 +43,17 @@ async def make_proof(user: Union[str, int]):
     )
 
 
-@app.bot.on(filters.command("start"))
-async def start(_, message):
-        if message.chat.type != "private":
-                return await message.reply(
-            "Pm Me For More Details.", reply_markup=keyboard)
-        else:
-                await message.reply(home_text_pm, reply_markup=home_text_pm)
+@System.on(events.NewMessage(incoming=True, pattern="/start"))
+async def start(event):
+    await event.reply("Hello!",
+                    buttons=[
+                        [Button.url("Support", url="https://t.me/TG_Power_Fed_007")],
+                        [Button.inline("Help",data="help")]
+                    ])
+
+@System.on(events.callbackquery.CallbackQuery(data="example"))
+async def ex(event):
+    await event.edit("You clicked a button!")
 
 
 @System.bot.on(events.NewMessage(pattern="[/!]alertmode"))
@@ -100,24 +80,24 @@ async def setalertmode(event):
         await event.reply("Failed to change mode")
 
 
-@System.bot.on(events.NewMessage(pattern="[/!]help"))
-async def help(event):
-    if not event.is_private:
-        return
-    await event.reply(
-        """
-Add this bot to any group and It will warn/ban If any gbanned user joins.
-**Commands:**
-    `help` - This text.
-    `start` - Start the bot.
-    `alertmode` - Change alertmode.
-        **Available modes:**
-        `silent-ban` - Silently ban user.
-        `ban` - Ban and send a message In the chat to say the user was banned.
-        `warn` - Warn that a gbanned user has joined but do nothing.
-All commands can be used with ! or /.
-    """
-    )
+System.on(events.callbackquery.CallbackQuery(data="help"))
+ async def help(event):
+     if not event.is_private:
+         return
+     await event.reply(
+         """
+ Add this bot to any group and It will warn/ban If any gbanned user joins.
+ **Commands:**
+     `help` - This text.
+     `start` - Start the bot.
+     `alertmode` - Change alertmode.
+         **Available modes:**
+         `silent-ban` - Silently ban user.
+         `ban` - Ban and send a message In the chat to say the user was banned.
+         `warn` - Warn that a gbanned user has joined but do nothing.
+ All commands can be used with ! or /.
+     """
+     )
 
 
 @System.bot.on(events.CallbackQuery(pattern=r"(approve|reject)_(\d*)"))
@@ -187,7 +167,7 @@ async def inline_handler(event):
     split = query.split(" ", 1)
     if event.query.user_id not in INSPECTORS:
         result = builder.article(
-            "Team7 System", text="You don't have access to this cmd."
+            "Sibyl System", text="You don't have access to this cmd."
         )
         await event.answer([result])
         return
