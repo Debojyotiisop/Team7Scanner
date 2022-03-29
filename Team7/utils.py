@@ -1,4 +1,3 @@
-   
 import re
 import shlex
 
@@ -50,3 +49,18 @@ class FlagParser:
 
 def seprate_flags(message: str) -> str:
     return FLAG_REGEX.sub("", message)
+
+def parse_range(numbers: str, max=100):
+    for x in numbers.split(','):
+        x = x.strip()
+        if x.isdigit():
+            yield int(x)
+        elif x[0] == '<':
+            yield from range(int(x[1:])-1, 0, -1)
+        elif x[0] == ">":
+            yield from range(int(x[1:])+1, max)
+        elif '-' in x:
+            xr = x.split('-')
+            yield from range(int(xr[0].strip()), int(xr[1].strip())+1)
+        else:
+            raise ValueError(f"Unknown range specified: {x}")
