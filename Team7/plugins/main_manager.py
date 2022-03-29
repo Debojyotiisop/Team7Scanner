@@ -307,13 +307,13 @@ async def scan(event, flags):
         executer.id, target, reason, msg.id, executer, message=replied.text
     )
 
-@System.on(system_cmd(pattern=r"re(vive|vert|store) ", allow_inspectors=True))
+@System.on(system_cmd(pattern=r"unscan) ", allow_inspectors=True))
 async def revive(event):
     try:
         user_id = event.text.split(" ", 1)[1]
     except IndexError:
         return
-    a = await event.reply("Hold on Reverting bans..")
+    a = await event.reply("unsbanning....")
     if not user_id.isnumeric():
         await a.edit("Invalid id")
         return
@@ -322,6 +322,8 @@ async def revive(event):
     ):
         await a.edit("User is not gbanned.")
         return
+    await a.edit("Ungban request sent to Vortex System. This might take 5minutes or so.")
+
     await a.edit("Revert request sent to GBANWAtch API. This might take 10minutes or so.")
 
 
@@ -334,6 +336,7 @@ async def revive(event):
 async def approve(event, flags):
     replied = await event.get_reply_message()
     match = re.match(r"\$SCAN", replied.text)
+    revert = re.match(r"\$UNSCAN", replied.text)
     auto_match = re.search(r"\$AUTO(SCAN)?", replied.text)
     me = await System.get_me()
     if auto_match and replied.sender.id == me.id:
