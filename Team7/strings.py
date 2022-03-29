@@ -67,8 +67,8 @@ User is gbanned. UNSCAN call declined
 
 reject_string = """
 $DECLINED
-**SCANNED ** `No`
-User is not Gbanned, Call declined.
+**SCAN ** `REquest declined`
+SCAn Request delicned by {ins}, HEad to [Team7](http://t.me/Tg_power_fed_007).
 """
 
 proof_string = """
