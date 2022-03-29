@@ -28,11 +28,11 @@
          "description": "readme.",
          "value": ""
       },
-      "Inspectors": {
+      "INSPECTORS": {
          "description": "see readme",
          "value": ""
       },
-      "Enforcers": {
+      "ENFORCER": {
          "description": "readme plz",
          "value": ""
       },
@@ -44,7 +44,7 @@
          "description": "radme.",
          "value": ""
       },      
-      "Team7_Approved_Logs": {
+      "Team7_approved_logs": {
          "description": "readme",
          "value": ""
       },
