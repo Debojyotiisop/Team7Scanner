@@ -61,8 +61,8 @@ Unban request!
 
 revert_reject_string = """
 $DECLINED
-**SCANNED:** `yes`
-User is gbanned. UNSCAN call declined
+**SCANNED:** `Request declined`
+SCAn Request delicned by {ins}, HEad to [Team7](http://t.me/Tg_power_fed_007).
 """
 
 reject_string = """
