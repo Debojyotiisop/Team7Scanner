@@ -307,7 +307,7 @@ async def scan(event, flags):
         executer.id, target, reason, msg.id, executer, message=replied.text
     )
 
-@System.on(system_cmd(pattern=r"unscan) ", allow_inspectors=True))
+@System.on(system_cmd(pattern=r"revert) ", allow_inspectors=True))
 async def revive(event):
     try:
         user_id = event.text.split(" ", 1)[1]
