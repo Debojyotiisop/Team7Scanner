@@ -1,7 +1,7 @@
 from Team7 import System, session, INSPECTORS, ENFORCERS, Sibyl_logs
 from Team7.strings import proof_string, scan_request_string, reject_string
 from Team7.plugins.Mongo_DB.gbans import get_gban, get_gban_by_proofid
-import Team7.plugins.Mongo_DB.bot_settings as dbfrom telethon import events, 
+import Team7.plugins.Mongo_DB.bot_settings as db
 from telethon import events,Button
 
 from telethon import events, custom
