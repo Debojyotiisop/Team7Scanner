@@ -29,11 +29,46 @@ $FORCED
 **Target Message:** `{message}`
 """
 
+group_admin_scan_string = """
+$ENFORCED CHAT-BAN
+**Inspector**: {ins}
+*Target**: {t_chat}
+**Reason**: `{reason}`
+**ʀᴏᴏᴛ**: {chat}
+**Chat Owner**: 
+`{owner_id}`
+**Admins**: `{admins}`
+"""
+group_admin_request_string = """
+$CHAT-BAN
+Group Ban Request!
+*Inspector**: {enf}
+**Target**: {t_chat}
+**Reason**: `{reason}`
+***Link**: {chat}
+**Chat Owner**: 
+`{owner_id}`
+**Admins**: `{admins}`
+"""
+
+revert_request_string = """
+$UNSCAN
+Unban request!
+**Inspector:** `{enforcer}`
+**UNSCAN USER:** `{spammer}`
+**ORGINATED:** {chat}
+"""
+
+revert_reject_string = """
+$DECLINED
+**SCANNED:** `yes`
+User is gbanned. UNSCAN call declined
+"""
+
 reject_string = """
-$REJECTED
-**Crime Coefficient:** `Under 100`
-Not a target for enforcement action.
-The trigger of Dominator will be locked.
+$DECLINED
+**SCANNED ** `No`
+User is not Gbanned, Call declined.
 """
 
 proof_string = """
@@ -43,13 +78,14 @@ proof_string = """
          ┣━[Nekobin]({paste})
          ┗━[DelDog]({url})"""
 
+
 scan_approved_string = """
-#LethalEliminator
-**Target User:** {scam}
-**Crime Coefficient:** `Over 300`
-**Reason:** `{reason}`
+「 SCAN RESULT 」
+**Tᴀʀɢᴇᴛ:** {scam}
+**Cʀɪᴍᴇ Stats:** `Over 300`
+**Rᴇᴀsᴏɴ:** `{reason}`
 **Enforcer:** `{enforcer}`
-**Case Number:** `{proof_id}`
+**Cᴀsᴇ Nᴜᴍʙᴇʀ:** `{proof_id}`
 """
 
 bot_gban_string = """
@@ -59,5 +95,12 @@ bot_gban_string = """
 **Reason:** `{reason}`
 """
 
+report_by_user = """
+**Report By User**
+**Inspector:** {exu}
+**Target:** {userr}
+**Reason:** {reasonn}
+**Reason By User:** {reason}
+"""
 # https://psychopass.fandom.com/wiki/Crime_Coefficient_(Index)
 # https://psychopass.fandom.com/wiki/The_Dominator
