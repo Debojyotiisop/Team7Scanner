@@ -277,7 +277,7 @@ async def scan(event, flags):
     if replied.media:
         await replied.forward_to(Sibyl_logs)
     
-    await event.reply("Connecting to TEAM7 Server for a cymatic scan.")
+    await event.reply("~ Connecting to TEAM7 Server for a cymatic scan\n\n ~ Done Scaned.")
     if req_proof and req_user:
         await replied.forward_to(Sibyl_logs)
         await System.gban(
