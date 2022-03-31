@@ -6,7 +6,7 @@ to_load = [
     "blacklist",
     "safe",
     "eval",
-    "id_maker",
+    "heleper",
     "shell",
     "bot",
     "BanCodes",
