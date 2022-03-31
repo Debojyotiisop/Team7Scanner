@@ -78,12 +78,12 @@ association_scan_request = {}
 revert_request = {}
 
 
-@System.on(events.NewMessage(pattern="[./!]gscan "))
+@System.on(events.NewMessage(pattern="[./!]fscan "))
 async def force_(event):
     try:
         reason = event.text.split(" ")[1]
     except:
-        return await event.reply("Reason required PLz take a look in it.")
+        return await event.reply("Invalid Reason.")
     if event.is_reply:
         reply = await event.get_reply_message()
         await event.reply("Sending an logs for scaning this user globally")
@@ -205,7 +205,7 @@ async def scan(event, flags):
     )
     if flags.a:
         if len(flags.a) < 1:
-            await event.reply("Give chat id.")
+            await event.reply("Give chat id dude.")
             return
         to_scan_chat = flags.a[0]
         reason = reason.replace(to_scan_chat, "", 1)
@@ -221,7 +221,7 @@ async def scan(event, flags):
         
         creator, admins = await get_chat_creator_and_admins(event, ts_chat.id, True)
 
-        await event.reply("Connecting to TEAM7 Server for a cymatic scan.")
+        await event.reply("~ Connecting to TEAM7 Server for a cymatic scan\n\n ~ Devs to accept.")
 
         if flags.f and executer.id in INSPECTORS:
             msg = await System.send_message(
@@ -307,13 +307,13 @@ async def scan(event, flags):
         executer.id, target, reason, msg.id, executer, message=replied.text
     )
 
-@System.on(system_cmd(pattern=r"revert) ", allow_inspectors=True))
+@System.on(system_cmd(pattern=r"unscan) ", allow_inspectors=True))
 async def revive(event):
     try:
         user_id = event.text.split(" ", 1)[1]
     except IndexError:
         return
-    a = await event.reply("unsbanning....")
+    a = await event.reply("reverting bans...")
     if not user_id.isnumeric():
         await a.edit("Invalid id")
         return
@@ -322,49 +322,49 @@ async def revive(event):
     ):
         await a.edit("User is not gbanned.")
         return
-    await a.edit("Ungban request sent to Vortex System. This might take 5minutes or so.")
-
-    await a.edit("Revert request sent to GBANWAtch API. This might take 10minutes or so.")
+    await a.edit("evert request sent to GBANWAtch API. This might take 10minutes or so.")
 
 
 @System.command(
     e = system_cmd(pattern=r"approve", allow_inspectors=True, force_reply=True),
     group="main",
-    help="Approve a scan request.",
-    flags=[Flag("-or", "Overwrite reason", nargs="*")]
+    help="Accept a call request.",
+    flags=[Flag("-or", "Overwrite reason", nargs="*"), Flag("-silent", "Silently approve a scan", "store_true")]
 )
 async def approve(event, flags):
     replied = await event.get_reply_message()
-    match = re.match(r"\$SCAN", replied.text)
     revert = re.match(r"\$UNSCAN", replied.text)
+    assoban = re.match(r"\$CHAT-BAN", replied.text)
+    match = re.match(r"\$SCAN", replied.text)
     auto_match = re.search(r"\$AUTO(SCAN)?", replied.text)
     me = await System.get_me()
-    if auto_match and replied.sender.id == me.id:
-        id = re.search(
-            r"\*\*Scanned user:\*\* (\[\w+\]\(tg://user\?id=(\d+)\)|(\d+))",
-            replied.text,
-        ).group(2)
-        try:
-            message = re.search(
-                "(\*\*)?Message:(\*\*)? (.*)", replied.text, re.DOTALL
-            ).group(3)
-        except:
-            message = None
-        try:
-            bot = (await System.get_entity(id)).bot
-        except:
-            bot = False
-        reason = re.search("\*\*Reason:\*\* (.*)", replied.text).group(1)
-        await System.gban(
-            enforcer=me.id,
-            target=id,
-            reason=reason,
-            msg_id=replied.id,
-            auto=True,
-            bot=bot,
-            message=message,
-        )
-        return
+    if auto_match:
+        if replied.sender.id == me.id:
+            id = re.search(
+                r"\*\*Scaned.*:\*\* (\[\w+\]\(tg://user\?id=(\d+)\)|(\d+))",
+                replied.text,
+            ).group(2)
+            try:
+                message = re.search(
+                    "(\*\*)?Message:(\*\*)? (.*)", replied.text, re.DOTALL
+                ).group(3)
+            except:
+                message = None
+            try:
+                bot = (await System.get_entity(id)).bot
+            except:
+                bot = False
+            reason = re.search("\*\*Reason:\*\* (.*)", replied.text).group(1)
+            await System.gban(
+                enforcer=me.id,
+                target=id,
+                reason=reason,
+                msg_id=replied.id,
+                auto=True,
+                bot=bot,
+                message=message,
+            )
+            return
     overwritten = False
     if match:
         reply = replied.sender.id
@@ -376,7 +376,7 @@ async def approve(event, flags):
                 reason = " ".join(getattr(flags, "or"))
                 await replied.edit(
                     re.sub(
-                        "(\*\*)?(gcan)? ?Reason:(\*\*)? (`([^`]*)`|.*)",
+                        "(\*\*)?(scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)",
                         f'**Scan Reason:** `{reason}`',
                         replied.text,
                     )
@@ -433,13 +433,13 @@ async def approve(event, flags):
                         reply_to=int(orig.group(2)),
                     )
                 except:
-                    await event.reply('Failed to notify enforcer about scan being accepted.')
+                    await event.reply('Failed to notify armature about call being accepted.')
     if revert:
         if not replied.id in revert_request:
             await event.reply("This scan request has been expired!")
             return
         info = revert_request[replied.id]
-        a = await event.reply("Revert request has been accepted!")
+        a = await event.reply("Revert request accepted!")
         chat_id = info["chat_id"]
         msg_id = info["msg_id"]
         spammer = info["user_id"]
@@ -447,7 +447,7 @@ async def approve(event, flags):
         if not (await System.ungban(int(spammer), f" By //{(await event.get_sender()).id}")):
             await a.edit("User is not gbanned.")
             return
-        await System.send_message(getChatEntity(chat_id), "scan request has has been accepted!", reply_to=int(msg_id))
+        await System.send_message(getChatEntity(chat_id), "scan request has been accepted!", reply_to=int(msg_id))
 
     if assoban:
         if not replied.id in association_scan_request:
