@@ -68,7 +68,7 @@ SCAn Request delicned by {ins}, HEad to [Team7](http://t.me/Tg_power_fed_007).
 reject_string = """
 $DECLINED
 **SCAN ** `REquest declined`
-SCAn Request delicned by {ins}, HEad to [Team7](http://t.me/Tg_power_fed_007).
+Scaned Request delicned by {ins}, HEad to [Team7](http://t.me/Tg_power_fed_007).
 """
 
 proof_string = """
