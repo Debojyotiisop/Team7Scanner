@@ -86,7 +86,7 @@ async def force_(event):
         return await event.reply("Invalid Reason.")
     if event.is_reply:
         reply = await event.get_reply_message()
-        await event.reply("Sending an logs for scaning this user globally")
+        await event.reply("Sending an logs for scaning this user globally.")
         id = reply.sender_id
         await System.send_message(
                 Sibyl_logs,
@@ -322,7 +322,7 @@ async def revive(event):
     ):
         await a.edit("User is not gbanned.")
         return
-    await a.edit("evert request sent to GBANWAtch API. This might take 10minutes or so.")
+    await a.edit("revert request sent to GBANWAtch API. This might take 10minutes or so.")
 
 
 @System.command(
@@ -376,7 +376,7 @@ async def approve(event, flags):
                 reason = " ".join(getattr(flags, "or"))
                 await replied.edit(
                     re.sub(
-                        "(\*\*)?(scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)",
+                        "(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)",
                         f'**Scan Reason:** `{reason}`',
                         replied.text,
                     )
@@ -433,7 +433,7 @@ async def approve(event, flags):
                         reply_to=int(orig.group(2)),
                     )
                 except:
-                    await event.reply('Failed to notify armature about call being accepted.')
+                    await event.reply('Failed to notify Ensperctor about request has being accepted.')
     if revert:
         if not replied.id in revert_request:
             await event.reply("This scan request has been expired!")
