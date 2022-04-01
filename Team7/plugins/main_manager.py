@@ -338,33 +338,32 @@ async def approve(event, flags):
     match = re.match(r"\$SCAN", replied.text)
     auto_match = re.search(r"\$AUTO(SCAN)?", replied.text)
     me = await System.get_me()
-    if auto_match:
-        if replied.sender.id == me.id:
-            id = re.search(
-                r"\*\*Scaned.*:\*\* (\[\w+\]\(tg://user\?id=(\d+)\)|(\d+))",
-                replied.text,
-            ).group(2)
-            try:
-                message = re.search(
-                    "(\*\*)?Message:(\*\*)? (.*)", replied.text, re.DOTALL
-                ).group(3)
-            except:
-                message = None
-            try:
-                bot = (await System.get_entity(id)).bot
-            except:
-                bot = False
-            reason = re.search("\*\*Reason:\*\* (.*)", replied.text).group(1)
-            await System.gban(
-                enforcer=me.id,
-                target=id,
-                reason=reason,
-                msg_id=replied.id,
-                auto=True,
-                bot=bot,
-                message=message,
-            )
-            return
+    if auto_match and replied.sender.id == me.id:
+        id = re.search(
+            r"\*\*Scanned user:\*\* (\[\w+\]\(tg://user\?id=(\d+)\)|(\d+))",
+            replied.text,
+        ).group(2)
+        try:
+            message = re.search(
+                "(\*\*)?Message:(\*\*)? (.*)", replied.text, re.DOTALL
+            ).group(3)
+        except:
+            message = None
+        try:
+            bot = (await System.get_entity(id)).bot
+        except:
+            bot = False
+        reason = re.search("\*\*Reason:\*\* (.*)", replied.text).group(1)
+        await System.gban(
+            enforcer=me.id,
+            target=id,
+            reason=reason,
+            msg_id=replied.id,
+            auto=True,
+            bot=bot,
+            message=message,
+        )
+        return
     overwritten = False
     if match:
         reply = replied.sender.id
