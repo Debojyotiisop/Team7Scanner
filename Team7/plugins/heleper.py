@@ -5,6 +5,7 @@ from telethon.tl.types import ChannelParticipantsAdmins
 import asyncio
 from Team7 import System, system_cmd
 
+
 @System.on(system_cmd(pattern="gscan ?(.*)", allow_inspectors=False))
 async def group_info(event):
     args = event.pattern_match.group(1)
@@ -17,17 +18,17 @@ async def group_info(event):
     except Exception:
         return await event.reply("Enter a reason")
     if event.is_reply:
-     try:
-      gay=await event.reply('Connecting to Team7 System core for Judgement')
-      entity = await event.client.get_entity(str(id))
-      totallist = await event.client.get_participants(
-            entity, filter=ChannelParticipantsAdmins)
-      for user in (await event.client.get_participants(entity, filter=ChannelParticipantsAdmins)):      
-              ch_full = await event.client(GetFullChannelRequest(channel=entity))
-     except Exception as e:
-      await gay.edit(str(e))
+        try:
+            gay = await event.reply('Connecting to Team7 System core for Judgement')
+            entity = await event.client.get_entity(str(id))
+            totallist = await event.client.get_participants(
+                entity, filter=ChannelParticipantsAdmins)
+            for _ in (await event.client.get_participants(entity, filter=ChannelParticipantsAdmins)):
+                ch_full = await event.client(GetFullChannelRequest(channel=entity))
+        except Exception as e:
+            await gay.edit(str(e))
     if not event.reply_to_msg_id:
-       return await event.reply('Reply to msg to add it as proof')
+        return await event.reply('Reply to msg to add it as proof')
     msg = "**#GSCANREQUEST**"
     msg += f"**ID**: `{entity.id}`"
     msg += f"\n**Title**: `{entity.title}`"
@@ -49,19 +50,24 @@ async def group_info(event):
     await System.bot.send_message(Sibyl_logs, msg)
     await asyncio.sleep(10)
     nig = await event.get_reply_message()
-    proofmsg=(f'http://t.me/{event.chat_id}/c/{nig.id}')
+    proofmsg = (f'http://t.me/{event.chat_id}/c/{nig.id}')
     f = (x.id)
-    nibba=(event.sender.id)
+    nibba = (event.sender.id)
     for user in totallist:
-      if not user.bot:
-        try:
-            ok= (user.id)
-            await System.send_message(GBAN_MSG_LOGS, f'/gban {user.id} {reason} by // {event.sender.id}')
-            await asyncio.sleep(5)
-            await System.send_message(GBAN_MSG_LOGS, f'/fban {user.id} {reason} by // {event.sender.id}')
-            await System.send_message(kek, f'**#JᴜᴅɢᴇᴍᴇɴᴛLᴏɢs**\n**➣ Usᴇʀ:** `{user.id}`\n**➣ Rᴇᴀsᴏɴ:** `{lol}`\n**➣ Eɴғᴏʀᴄᴇʀ:** `{event.sender.id}`\n**➣ Pʀᴏᴏғ:** [Link]({proofmsg})', link_preview=False)
-            await update_gban(victim=ok ,reason=reason, enforcer=nibba, message=proofmsg)
-            await asyncio.sleep(10)
-            await gay.edit('Successfully banned all admins of chat')
-        except:
+        if not user.bot:
+            try:
+                ok = (user.id)
+                await System.send_message(GBAN_MSG_LOGS, f'/gban {user.id} {reason} by // {event.sender.id}')
+                await asyncio.sleep(5)
+                await System.send_message(GBAN_MSG_LOGS, f'/fban {user.id} {reason} by // {event.sender.id}')
+                await System.send_message(kek,
+                                          f'**#JᴜᴅɢᴇᴍᴇɴᴛLᴏɢs**\n**➣ Usᴇʀ:** `{user.id}`\n**➣ Rᴇᴀsᴏɴ:** `{lol}`\n**➣ Eɴғᴏʀᴄᴇʀ:** `{event.sender.id}`\n**➣ Pʀᴏᴏғ:** [Link]({proofmsg})',
+                                          link_preview=False)
+                await update_gban(victim=ok, reason=reason, enforcer=nibba, message=proofmsg)
+                await asyncio.sleep(10)
+                await gay.edit('Successfully banned all admins of chat')
+            except:
                 pass
+
+
+__plugin_name__ = "heleper"

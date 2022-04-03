@@ -2,7 +2,7 @@ from Team7 import System, session, INSPECTORS, ENFORCERS, Sibyl_logs
 from Team7.strings import proof_string, scan_request_string, reject_string
 from Team7.plugins.Mongo_DB.gbans import get_gban, get_gban_by_proofid
 import Team7.plugins.Mongo_DB.bot_settings as db
-from telethon import events,Button
+from telethon import events, Button
 
 from telethon import events, custom
 
@@ -16,10 +16,7 @@ DATA_LOCK = asyncio.Lock()
 
 
 def can_ban(event):
-    status = False
-    if event.chat.admin_rights:
-        status = event.chat.admin_rights.ban_users
-    return status
+    return event.chat.admin_rights.ban_users if event.chat.admin_rights else False
 
 
 async def make_proof(user: Union[str, int]):
@@ -31,7 +28,7 @@ async def make_proof(user: Union[str, int]):
         return False
     message = data.get("message") or ""
     async with session.post(
-        "https://nekobin.com/api/documents", json={"content": message}
+            "https://nekobin.com/api/documents", json={"content": message}
     ) as r:
         paste = f"https://nekobin.com/{(await r.json())['result']['key']}"
     url = "https://del.dog/documents"
@@ -46,10 +43,11 @@ async def make_proof(user: Union[str, int]):
 @System.on(events.NewMessage(incoming=True, pattern="/start"))
 async def start(event):
     await event.reply("Hello!",
-                    buttons=[
-                        [Button.url("Support", url="https://t.me/TG_Power_Fed_007")],
-                        [Button.inline("Help",data="help")]
-                    ])
+                      buttons=[
+                          [Button.url("Support", url="https://t.me/TG_Power_Fed_007")],
+                          [Button.inline("Help", data="help")]
+                      ])
+
 
 @System.on(events.callbackquery.CallbackQuery(data="example"))
 async def ex(event):
@@ -79,12 +77,13 @@ async def setalertmode(event):
     else:
         await event.reply("Failed to change mode")
 
+
 @System.on(events.callbackquery.CallbackQuery(data="help"))
 async def help(event):
     if not event.is_private:
         return
     await event.reply(
-         """
+        """
  Add this bot to any group and It will warn/ban If any gbanned user joins.
  **Commands:**
      `help` - This text.
@@ -96,7 +95,7 @@ async def help(event):
          `warn` - Warn that a gbanned user has joined but do nothing.
  All commands can be used with ! or /.
      """
-     )
+    )
 
 
 @System.bot.on(events.CallbackQuery(pattern=r"(approve|reject)_(\d*)"))
@@ -225,7 +224,7 @@ async def inline_handler(event):
 
 
 @System.bot.on(events.ChatAction())
-async def check_user(event):
+async def check_user(event):  # sourcery no-metrics
     if not event.user_joined and not event.user_added:
         return
     if event.created:
@@ -235,15 +234,13 @@ async def check_user(event):
         return
     if event.user_added:
         if user.is_self:
-            if await db.add_chat(event.chat_id):
-                msg = (
-                    "Thanks for adding me here!\n"
-                    "Here are your current settings:\n"
-                    "Alert Mode: Warn"
-                )
-                await event.respond(msg)
-            else:  # Chat already exists in database
+            if not await db.add_chat(event.chat_id):
                 return
+            msg = (
+                "Thanks for adding me here!\n"
+                "Here are your current settings:\n"
+                "Alert Mode: Warn"
+            )
         else:
             u = await get_gban(user.id)
             chat = await db.get_chat(event.chat_id)
@@ -279,7 +276,7 @@ async def check_user(event):
                 else:
                     msg += "I can't ban users here, Changed mode to `warn`"
                     await db.change_settings(event.chat_id, True, "warn")
-            await event.respond(msg)
+        await event.respond(msg)
     elif user.id in INSPECTORS or user.id in ENFORCERS:
         return
     else:

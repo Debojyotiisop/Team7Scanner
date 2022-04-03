@@ -16,9 +16,9 @@ from telethon import events
 
 import re
 
-
 tgurl_regex = re.compile("(http(s)?://)?t.me/(c/)?(\w+)/(\d+)")
 url_regex = re.compile("(https?)?(://)?(\w+\.)?(\w+\.\w+)(/.*)?")
+
 
 def get_data_from_url(url: str) -> tuple:
     """
@@ -31,11 +31,13 @@ def get_data_from_url(url: str) -> tuple:
         return False
     return (match.group(4), match.group(5))
 
+
 def parse_url(url: str):
     match = url_regex.match(url)
     if not match:
         return False
     return {"full": match.group(0), "protocol": match.group(1), "domain": match.group(4), "path": match.group(5) or "/"}
+
 
 def find_urls(string, exclude_telegram=False):
     match = url_regex.findall(string)
@@ -47,6 +49,7 @@ def find_urls(string, exclude_telegram=False):
         return None
     return [parse_url("".join(m)) for m in match]
 
+
 def getChatEntity(string):
     string = str(string)
     if string.startswith("-100"):
@@ -55,6 +58,7 @@ def getChatEntity(string):
         return int(string)
     except:
         return string
+
 
 async def get_chat_creator_and_admins(event, chat_id, need_admins=False):
     creator = 0
@@ -66,6 +70,7 @@ async def get_chat_creator_and_admins(event, chat_id, need_admins=False):
                 return creator
         admins += f"\n{user.id}"
     return creator, admins
+
 
 async def is_member(event, chat_id, user_id):
     async for user in event.client.iter_participants(chat_id):
@@ -89,18 +94,18 @@ async def force_(event):
         await event.reply("Sending an logs for scaning this user globally.")
         id = reply.sender_id
         await System.send_message(
-                Sibyl_logs,
-                forced_scan_string.format(
-                    enforcer=event.sender_id,
-                    spammer=id,
-                    chat=event.message_link,
-                    message=reply.text,
-                    reason=reason,
-                ),
-                link_preview=False
-            )
+            Sibyl_logs,
+            forced_scan_string.format(
+                enforcer=event.sender_id,
+                spammer=id,
+                chat=event.message_link,
+                message=reply.text,
+                reason=reason,
+            ),
+            link_preview=False
+        )
         await System.gban(
-        event.sender_id, reply.sender_id, reason, reply.id, event.sender_id, message=reply.text
+            event.sender_id, reply.sender_id, reason, reply.id, event.sender_id, message=reply.text
         )
 
 
@@ -176,7 +181,8 @@ async def scan(event, flags):
             msg = await System.send_message(
                 Sibyl_logs,
                 forced_scan_string.format(
-                    ins=executor, spammer=message.from_id.user_id, chat=f"https://t.me/{data[0]}/{data[1]}", message=message.text, reason=reason
+                    ins=executor, spammer=message.from_id.user_id, chat=f"https://t.me/{data[0]}/{data[1]}",
+                    message=message.text, reason=reason
                 ),
                 link_preview=False
             )
@@ -218,19 +224,19 @@ async def scan(event, flags):
         if not ts_chat.megagroup:
             await event.reply("You need to provide me a group's id, not channel's.")
             return
-        
+
         creator, admins = await get_chat_creator_and_admins(event, ts_chat.id, True)
 
         await event.reply("~ Connecting to TEAM7 Server for a cymatic scan\n\n ~ Devs to accept.")
 
         if flags.f and executer.id in INSPECTORS:
             msg = await System.send_message(
-                    Sibyl_logs,
-                    group_admin_scan_string.format(
-                        ins=executor, t_chat=to_scan_chat, chat=chat, owner_id=creator, reason=reason, admins=admins
-                    ),
-                    link_preview=False
-                )
+                Sibyl_logs,
+                group_admin_scan_string.format(
+                    ins=executor, t_chat=to_scan_chat, chat=chat, owner_id=creator, reason=reason, admins=admins
+                ),
+                link_preview=False
+            )
             async for user in event.client.iter_participants(ts_chat.id, filter=ChannelParticipantsAdmins):
                 if user.id in ENFORCERS or user.id in SIBYL:
                     continue
@@ -239,13 +245,14 @@ async def scan(event, flags):
                     await asyncio.sleep(10)
         else:
             msg = await System.send_message(
-                Sibyl_logs, 
+                Sibyl_logs,
                 group_admin_request_string.format(
                     enf=executor, t_chat=to_scan_chat, chat=chat, owner_id=creator, reason=reason, admins=admins
                 ),
                 link_preview=False
             )
-            association_scan_request[msg.id] = {"msg_id": event.id, "chat_id": event.chat_id, "ts_chat":ts_chat.id, "reason":reason, "executer_id":executer.id}
+            association_scan_request[msg.id] = {"msg_id": event.id, "chat_id": event.chat_id, "ts_chat": ts_chat.id,
+                                                "reason": reason, "executer_id": executer.id}
     if not event.is_reply:
         return
     if flags.o:
@@ -268,15 +275,12 @@ async def scan(event, flags):
             return
         sender = f"[{replied.sender.first_name}](tg://user?id={replied.sender.id})"
         target = replied.sender.id
-    
+
     req_proof = req_user = False
-    if flags.f and executer.id in INSPECTORS:
-        approve = True
-    else:
-        approve = False
+    approve = bool(flags.f and executer.id in INSPECTORS)
     if replied.media:
         await replied.forward_to(Sibyl_logs)
-    
+
     await event.reply("~ Connecting to TEAM7 Server for a cymatic scan\n\n ~ Done Scaned.")
     if req_proof and req_user:
         await replied.forward_to(Sibyl_logs)
@@ -307,6 +311,7 @@ async def scan(event, flags):
         executer.id, target, reason, msg.id, executer, message=replied.text
     )
 
+
 @System.on(system_cmd(pattern=r"unscan) ", allow_inspectors=True))
 async def revive(event):
     try:
@@ -318,7 +323,7 @@ async def revive(event):
         await a.edit("Invalid id")
         return
     if not (
-        await System.ungban(int(user_id), f" By //{(await event.get_sender()).id}")
+            await System.ungban(int(user_id), f" By //{(await event.get_sender()).id}")
     ):
         await a.edit("User is not gbanned.")
         return
@@ -326,7 +331,7 @@ async def revive(event):
 
 
 @System.command(
-    e = system_cmd(pattern=r"approve", allow_inspectors=True, force_reply=True),
+    e=system_cmd(pattern=r"approve", allow_inspectors=True, force_reply=True),
     group="main",
     help="Accept a call request.",
     flags=[Flag("-or", "Overwrite reason", nargs="*"), Flag("-silent", "Silently approve a scan", "store_true")]
@@ -385,7 +390,7 @@ async def approve(event, flags):
                 reason = re.search(
                     r"(\*\*)?(Scan)? ?Reason:(\*\*)? (`([^`]*)`|.*)", replied.text
                 )
-          #      reason = reason.group(5) if reason.group(5) else reason.group(4)
+            #      reason = reason.group(5) if reason.group(5) else reason.group(4)
             if len(list) > 1:
                 id1 = list[0]
                 id2 = list[1]
@@ -416,7 +421,7 @@ async def approve(event, flags):
             chat_id_entity = getChatEntity(orig.group(1))
             if not await is_member(event, chat_id_entity, (await System.get_me()).id):
                 return
-            
+
             if orig and not getattr(flags, "silent", None) == True:
                 try:
                     if overwritten:
@@ -471,11 +476,10 @@ async def approve(event, flags):
                 await System.gban(executer_id, user.id, reason, replied.id, event.sender_id, message="")
                 await asyncio.sleep(10)
 
-        
         chat_id_entity = getChatEntity(chat_id)
         if not await is_member(event, chat_id_entity, (await System.get_me()).id):
             return
-        
+
         try:
             if overwritten:
                 await System.send_message(
@@ -491,6 +495,7 @@ async def approve(event, flags):
             )
         except:
             await event.reply('Failed to notify armature about scan being accepted.')
+
 
 @System.on(system_cmd(pattern=r"reject", allow_inspectors=True, force_reply=True))
 async def reject(event):
@@ -544,7 +549,7 @@ async def reject(event):
             await System.edit_message(Sibyl_logs, replied.id, reject_string)
         except:
             pass
-    
+
     if len(reason) > 1:
         text += f"\nReason: `{reason[1].strip()}`"
 
@@ -554,7 +559,6 @@ async def reject(event):
         reply_to=origreply,
         link_preview=False
     )
-
 
 
 help_plus = """
@@ -578,4 +582,4 @@ Flags:
 All commands can be used with ! or / or ? or .
 """
 
-__plugin_name__ = "Main"
+__plugin_name__ = "main_manager"

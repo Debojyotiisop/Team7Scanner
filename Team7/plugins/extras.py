@@ -1,3 +1,5 @@
+import sys
+
 from telethon.utils import resolve_invite_link
 from telethon.tl.functions.channels import LeaveChannelRequest
 from telethon.tl.functions.channels import JoinChannelRequest
@@ -16,7 +18,7 @@ import re
 import json
 
 try:
-    from Team7_System import HEROKU_API_KEY, HEROKU_APP_NAME
+    from Team7 import HEROKU_API_KEY, HEROKU_APP_NAME
 
     heroku_conn = heroku3.from_key(HEROKU_API_KEY)
     app = heroku_conn.app(HEROKU_APP_NAME)
@@ -28,7 +30,7 @@ except BaseException:
 json_file = os.path.join(os.getcwd(), "Team7/elevated_users.json")
 
 
-@System.on(system_cmd(pattern=r"addenf", allow_inspectors=True))
+@System.on(system_cmd(pattern=r"enf", allow_inspectors=True))
 async def addenf(event) -> None:
     if event.message.reply_to_msg_id:
         replied = await event.get_reply_message()
@@ -56,19 +58,19 @@ async def addenf(event) -> None:
         with open(json_file, "w") as file:
             json.dump(data, file, indent=4)
         await System.send_message(event.chat_id, "Added to enforcers, Restarting...")
-        if not event.from_id.user_id in TEAM7:
+        if event.from_id.user_id not in SIBYL:
             await add_enforcers(event.from_id.user_id, u_id)
         await System.disconnect()
         os.execl(sys.executable, sys.executable, *sys.argv)
         quit()
-    if not event.from_id.user_id in TEAM7:
+    if event.from_id.user_id not in SIBYL:
         await add_enforcers(event.from_id.user_id, u_id)
     await System.send_message(
         event.chat_id, f"Added [{u_id}](tg://user?id={u_id}) to Enforcers"
     )
 
 
-@System.on(system_cmd(pattern=r"rmenf", allow_inspectors=True))
+@System.on(system_cmd(pattern=r"delenf", allow_inspectors=True))
 async def rmenf(event) -> None:
     if event.message.reply_to_msg_id:
         replied = await event.get_reply_message()
@@ -87,11 +89,11 @@ async def rmenf(event) -> None:
         str(u_id)
         ENF = os.environ.get("ENFORCERS")
         if ENF.endswith(u_id):
-            config["ENFORCERS"] = ENF.strip(" " + str(u_id))
+            config["ENFORCERS"] = ENF.strip(f" {u_id}")
         elif ENF.startswith(u_id):
-            config["ENFORCERS"] = ENF.strip(str(u_id) + " ")
+            config["ENFORCERS"] = ENF.strip(f'{u_id} ')
         else:
-            config["ENFORCERS"] = ENF.strip(" " + str(u_id) + " ")
+            config["ENFORCERS"] = ENF.strip(f" {u_id} ")
     else:
         with open(json_file, "r") as file:
             data = json.load(file)
@@ -127,10 +129,9 @@ async def join(event) -> None:
         link = event.text.split(" ", 1)[1]
     except BaseException:
         return
-    private = re.match(
+    if private := re.match(
         r"(https?://)?(www\.)?t(elegram)?\.(dog|me|org)/joinchat/(.*)", link
-    )
-    if private:
+    ):
         await System(ImportChatInviteRequest(private.group(5)))
         await System.send_message(event.chat_id, "Joined chat!")
         await System.send_message(
@@ -146,7 +147,7 @@ async def join(event) -> None:
         )
 
 
-@System.on(system_cmd(pattern=r"addins"))
+@System.on(system_cmd(pattern=r"ins"))
 async def addins(event) -> None:
     if event.reply:
         replied = await event.get_reply_message()
@@ -183,7 +184,7 @@ async def addins(event) -> None:
     )
 
 
-@System.on(system_cmd(pattern=r"rmins"))
+@System.on(system_cmd(pattern=r"delins"))
 async def rmins(event) -> None:
     if event.message.reply_to_msg_id:
         replied = await event.get_reply_message()
@@ -224,10 +225,10 @@ async def rmins(event) -> None:
     )
 
 
-@System.on(system_cmd(pattern=r"info ", allow_inspectors=True))
+@System.on(system_cmd(pattern=r"info ", allow_inspectors=True,allow_enforcer=True))
 async def info(event) -> None:
     data = (await get_data())["standalone"]
-    if not event.text.split(" ", 1)[1] in data.keys():
+    if event.text.split(" ", 1)[1] not in data.keys():
         return
     u = event.text.split(" ", 1)[1]
     msg = f"User: {u}\n"
@@ -236,7 +237,7 @@ async def info(event) -> None:
     await event.reply(msg)
 
 
-@System.on(system_cmd(pattern=r"inspectors", allow_inspectors=True))
+@System.on(system_cmd(pattern=r"inspectors", allow_inspectors=True, allow_enforcer=True))
 async def listuserI(event) -> None:
     msg = "Inspectors:\n"
     for z in INSPECTORS:
@@ -254,10 +255,9 @@ async def resolve(event) -> None:
         link = event.text.split(" ", 1)[1]
     except BaseException:
         return
-    match = re.match(
+    if match := re.match(
         r"(https?://)?(www\.)?t(elegram)?\.(dog|me|org)/joinchat/(.*)", link
-    )
-    if match:
+    ):
         try:
             data = resolve_invite_link(match.group(5))
         except BaseException:
@@ -281,11 +281,11 @@ async def leave(event) -> None:
     if c_id:
         await System(LeaveChannelRequest(int(c_id.group(0))))
         await System.send_message(
-            event.chat_id, f"Team7 Scanner has left chat with id[-{c_id.group(1)}]"
+            event.chat_id, f"GbanWatch has left chat with id[-{c_id.group(1)}]"
         )
     else:
         await System(LeaveChannelRequest(link))
-        await System.send_message(event.chat_id, f"Team7 Scanner has left chat[{link}]")
+        await System.send_message(event.chat_id, f"TEAM7 has left chat[{link}]")
 
 
 @System.on(system_cmd(pattern=r"get_redirect ", allow_inspectors=True))
@@ -302,15 +302,15 @@ async def redirect(event) -> None:
 
 help_plus = """
 Help!
-`addenf` - Adds a user as an enforcer.
-Format : addenf <user id / as reply>
-`rmenf` - Removes a user from enforcers.
-Format : rmenf <user id / as reply>
+`enf` - Adds a user as an enforcer.
+Format : enf <user id / as reply>
+`delenf` - Removes a user from enforcers.
+Format : delenf <user id / as reply>
 `enforcers` - Lists all enforcers.
-`addins` - Adds a user as an Inspector.
-Format : addins <user id / as reply>
-`rmins` - Removes a user from Inspector.
-Format : rmins <user id / as reply>
+`ins` - Adds a user as an Inspector.
+Format : ins <user id / as reply>
+`delins` - Removes a user from Inspector.
+Format : delins <user id / as reply>
 `inspector` - Lists all inspectors.
 `join` - Joins a chat.
 Format : join <chat username or invite link>
