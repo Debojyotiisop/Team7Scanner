@@ -61,7 +61,7 @@ async def stats(event):
     await event.reply(msg)
     
 
-@System.on(system_cmd(pattern=r"info", allow_enforcer=True))
+@System.on(system_cmd(pattern=r"t7info", allow_enforcer=True))
 async def status(event):
     msg = await event.reply("Portable Psychological Diagnosis and Suppression System.")
     time.sleep(1)
@@ -78,8 +78,6 @@ async def status(event):
     await msg.edit("Connection successful!")
     time.sleep(1)
     await msg.edit("You are an Verified User")
-    time.sleep(2)
-    await msg.edit("🔰🔰VERIFIED🔰🔰")
     time.sleep(2)
     senderx = await event.get_sender()
     if event.sender.id in SIBYL:
@@ -102,7 +100,7 @@ start_msg = """Hi {user}!
 - __Auto Push and release Watch From Gban System Requests.__
 `Click the below button to know how to use me!`"""
 
-@System.on(system_cmd(pattern=r"start", allow_slash=False, allow_inspectors=True))
+@System.on(system_cmd(pattern=r"t7start", allow_slash=False, allow_inspectors=True))
 async def send_help(event):
     from_ = await System.get_entity(event.sender_id)
     await event.reply(
@@ -114,7 +112,7 @@ async def send_help(event):
     
     
     
-@System.on(system_cmd(pattern="stats",allow_inspectors=True, allow_enforcer=True))
+@System.on(system_cmd(pattern="t7stats",allow_inspectors=True, allow_enforcer=True))
 async def stats(event):
     msg = f"Processed {System.processed} messages since last restart."
     msg += f"\n{len(ENFORCERS)} Enforcers & {len(INSPECTORS)} Inspectors"
@@ -128,7 +126,7 @@ async def stats(event):
     await event.reply(msg)
 
 
-@System.on(system_cmd(pattern=r"help", allow_slash=False, allow_inspectors=True, allow_enforcer=True))
+@System.on(system_cmd(pattern=r"t7help", allow_slash=False, allow_inspectors=True, allow_enforcer=True))
 async def send_help(event):
     try:
         help_for = event.text.split(" ", 1)[1].lower()
