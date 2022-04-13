@@ -47,37 +47,17 @@ for load in to_load:
 
 
         
-@System.on(system_cmd(pattern="t7stats",allow_inspectors=True, allow_enforcer=True))
-async def stats(event):
-    msg = f"Processed {System.processed} messages since last restart."
-    msg += f"\n{len(ENFORCERS)} Enforcers & {len(INSPECTORS)} Inspectors"
-    g = 0
-    async for d in event.client.iter_dialogs(limit=None):
-        if d.is_channel and not d.entity.broadcast:
-            g += 1
-        elif d.is_group:
-            g += 1
-    msg += f"\nModerating {g} Groups"
-    await event.reply(msg)
-    
-
 @System.on(system_cmd(pattern=r"t7info", allow_enforcer=True))
 async def status(event):
-    msg = await event.reply("Portable Psychological Diagnosis and Suppression System.")
+    msg = await event.reply("ᴄᴏɴɴᴇᴄᴛɪɴɢ ᴛᴏ sᴇʀᴠᴇʀ ..")
     time.sleep(1)
-    await msg.edit("Initialising ▫️◾️◾️")
+    await msg.edit("ᴄᴏɴɴᴇᴄᴛɪɴɢ ᴛᴏ sᴇʀᴠᴇʀ ....")
     time.sleep(1)
-    await msg.edit("Initialising ▫️▫️◾️")
+    await msg.edit("ᴄᴏɴɴᴇᴄᴛɪɴɢ ᴛᴏ sᴇʀᴠᴇʀ ......")
     time.sleep(1)
-    await msg.edit("Initialising ◾️◾️▫️")
+    await msg.edit("ᴄᴏɴɴᴇᴄᴛɪᴏɴ sᴜᴄᴇssғᴜʟ !")
     time.sleep(1)
-    await msg.edit("Initialising ◾️▫️▫️")
-    time.sleep(1)
-    await msg.edit("Initialising ▫️▫️▫️")
-    time.sleep(1)
-    await msg.edit("Connection successful!")
-    time.sleep(1)
-    await msg.edit("You are an Verified User")
+    await msg.edit("ʏᴏᴜ ᴀʀᴇ ᴀ ᴠᴇʀɪғɪᴇᴅ ᴜsᴇʀ")
     time.sleep(2)
     senderx = await event.get_sender()
     if event.sender.id in SIBYL:
