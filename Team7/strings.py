@@ -1,12 +1,10 @@
 on_string = """
- 「 Connected to [Team7](http://t.me/Tg_power_fed_007)  」
-        Welcome to Team7 - System
+「 ᴄᴏɴɴᴇᴄᴛᴇᴅ ᴛᴏ ᴛᴇᴀᴍ 7 」
 ➖➖➖➖➖➖➖➖➖➖➖➖➖
- ⭐️⭐️⭐️⭐️⭐️
-• NAME : ㅤ{name}
-• RANK : {Enforcer}
+• ɴᴀᴍᴇ : ㅤYASH
+• ʀᴀɴᴋ : Inspector
 ➖➖➖➖➖➖➖➖➖➖➖➖➖
-「 You are an authorized user! 🎩 」
+「 ʏᴏᴜ ᴀʀᴇ ᴀɴ ᴀᴜᴛʜᴏʀɪᴢᴇᴅ ᴜsᴇʀ ! 」
 """
 
 # Make sure not to change these too much
