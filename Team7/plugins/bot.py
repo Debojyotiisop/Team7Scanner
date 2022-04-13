@@ -40,7 +40,7 @@ async def make_proof(user: Union[str, int]):
     )
 
 
-@System.on(events.NewMessage(incoming=True, pattern="/start"))
+@System.on(events.NewMessage(incoming=True, pattern="/t7start"))
 async def start(event):
     await event.reply("Hello!",
                       buttons=[
