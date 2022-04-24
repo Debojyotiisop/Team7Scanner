@@ -15,7 +15,7 @@ import time
 from Team7 import SIBYL
 from sys import version as ver
 from telethon import version as vers
-
+from Team7 import OWNERID
 
 logging.basicConfig(
     format="[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s", level=logging.WARNING
@@ -64,6 +64,8 @@ async def status(event):
         user_status = "**Developer**"
     elif event.sender.id in INSPECTORS:
         user_status = "**Inspector**"
+    elif event.sender.id in OWNERID:
+        user_status = "**Owner**"
     else: 
         user_status = "**Enforcer**"
     time.sleep(1)
