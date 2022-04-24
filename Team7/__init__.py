@@ -42,6 +42,7 @@ if ENV:
     GBAN_MSG_LOGS = [int(x) for x in os.environ.get("GBAN_MSG_LOGS", "").split()]
     GBAN_MSG_LOGS1 = "-1001580719176"
     BOT_TOKEN = "5221050210:AAH3VQzKmGG1uylSaYZgJjKAH1GUkaneayA"
+    OWNERID = [int(x) for x in os.environ.get("OWNERID", "").split()]
 else:
     import Team7_System.config as Config
 
@@ -58,9 +59,11 @@ else:
     Sibyl_approved_logs = Config.Sibyl_approved_logs
     GBAN_MSG_LOGS = Config.GBAN_MSG_LOGS
     BOT_TOKEN = Config.BOT_TOKEN
+    OWNERID = data["OWNERID"]
 
 INSPECTORS.extend(SIBYL)
 ENFORCERS.extend(INSPECTORS)
+OWNERID.extend(OWNERID)
 
 session = aiohttp.ClientSession()
 
