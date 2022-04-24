@@ -16,6 +16,10 @@
          "description": "app hash.",
          "value": ""
       },
+      "OWNERID": {
+         "description": "Owner's Id",
+         "value": ""
+      },
       "STRING_SESSION": {
          "description": "session ",
          "value": ""
