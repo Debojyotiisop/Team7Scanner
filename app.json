@@ -20,12 +20,12 @@
          "description": "session ",
          "value": ""
       },    
-      "HEROKU_API_KEY": {
+      "HEROKU_APP_NAME": {
          "description": "get from heroku settings.",
          "value": ""
-      },      
-      "TEAM7": {
-         "description": "readme.",
+      }, 
+      "HEROKU_API_KEY": {
+         "description": "get from heroku settings.",
          "value": ""
       },
       "INSPECTORS": {
@@ -40,11 +40,15 @@
          "description": "mongodb.com go get it.. see channel infotel autofilter bot tute",
          "value": ""
       },
-      "Team7_logs": {
+      "Sibyl_logs": {
          "description": "radme.",
          "value": ""
       },      
-      "Team7_approved_logs": {
+      "Sibyl_Approved_Logs": {
+         "description": "readme",
+         "value": ""
+      },
+      "SIBYL": {
          "description": "readme",
          "value": ""
       },
