@@ -60,12 +60,10 @@ async def status(event):
     await msg.edit("ʏᴏᴜ ᴀʀᴇ ᴀ ᴠᴇʀɪғɪᴇᴅ ᴜsᴇʀ")
     time.sleep(2)
     senderx = await event.get_sender()
-    if event.sender.id in SIBYL:
-        user_status = "**Developer**"
+    if event.sender.id in OWNERID:
+        user_status = "**▪︎Owner▪︎**"
     elif event.sender.id in INSPECTORS:
         user_status = "**Inspector**"
-    elif event.sender.id in OWNERID:
-        user_status = "**Owner**"
     else: 
         user_status = "**Enforcer**"
     time.sleep(1)
