@@ -64,6 +64,8 @@ async def status(event):
         user_status = "**▪︎Owner▪︎**"
     elif event.sender.id in INSPECTORS:
         user_status = "**Inspector**"
+    elif event.sender.id in SIBYL:
+        User_status = "**Dev**"
     else: 
         user_status = "**Enforcer**"
     time.sleep(1)
