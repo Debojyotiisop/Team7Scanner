@@ -1,5 +1,5 @@
 asyncio
-telethon
+Telethon==1.24.0
 aiohttp
 motor 
 heroku3
