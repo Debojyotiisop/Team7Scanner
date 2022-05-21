@@ -1,10 +1,14 @@
-FROM debian:latest
-FROM python:3.9.6-slim-buster
-RUN apt update && apt upgrade -y
-RUN apt install git curl python3-pip -y
-RUN pip3 install -U pip
-RUN mkdir /app/
-WORKDIR /app/
-COPY . /app/
-RUN pip3 install -U -r requirements.txt
-CMD python3 -m Team7
+FROM debian:11
+FROM python:3.10.4-slim-buster
+
+WORKDIR /Team7Scanner/
+
+RUN /usr/local/bin/python -m pip install --upgrade pip
+RUN apt-get update && apt-get upgrade -y
+
+COPY requirements.txt .
+
+RUN pip3 install wheel
+RUN pip3 install --no-cache-dir -U -r requirements.txt
+COPY . .
+CMD ["python3.10", "-m", "Team7"]
