@@ -24,42 +24,19 @@ logging.basicConfig(
     level=logging.INFO,
 )
 
-ENV = bool(os.environ.get("ENV", False))
-if ENV:
-    API_ID_KEY = int(os.environ.get("API_ID_KEY"))
-    API_HASH_KEY = os.environ.get("API_HASH_KEY")
-    STRING_SESSION = os.environ.get("STRING_SESSION")
-    HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY")
-    HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME")
-    RAW_SIBYL = os.environ.get("SIBYL", "")
-    RAW_ENFORCERS = os.environ.get("ENFORCERS", "")
-    SIBYL = [int(x) for x in os.environ.get("SIBYL", "").split()]
-    INSPECTORS = [int(x) for x in os.environ.get("INSPECTORS", "").split()]
-    ENFORCERS = [int(x) for x in os.environ.get("ENFORCERS", "").split()]
-    MONGO_DB_URL = os.environ.get("MONGO_DB_URL")
-    Sibyl_logs = int(os.environ.get("Sibyl_logs"))
-    Sibyl_approved_logs = int(os.environ.get("Sibyl_Approved_Logs"))
-    GBAN_MSG_LOGS = [int(x) for x in os.environ.get("GBAN_MSG_LOGS", "").split()]
-    
-    BOT_TOKEN = []
-    OWNERID = [int(x) for x in os.environ.get("OWNERID", "").split()]
-else:
-    from Team7.config import Development as Config
 
-    API_ID_KEY = Config.API_ID
-    API_HASH_KEY = Config.API_HASH
-    STRING_SESSION = Config.STRING_SESSION
-    MONGO_DB_URL = Config.MONGO_DB_URL
-    with open(os.path.join(os.getcwd(), "Team7/elevated_users.json"), "r") as f:
-        data = json.load(f)
-    SIBYL = data["SIBYL"]
-    ENFORCERS = data["ENFORCERS"]
-    INSPECTORS = data["INSPECTORS"]
-    Sibyl_logs = Config.Sibyl_logs
-    Sibyl_approved_logs = Config.Sibyl_approved_logs
-    GBAN_MSG_LOGS = Config.GBAN_MSG_LOGS
-    BOT_TOKEN = Config.BOT_TOKEN
-    OWNERID = data["OWNERID"]
+API_ID_KEY = 19153657
+API_HASH_KEY = "f7ec417477c60578119d3d0bcf42f38c"
+STRING_SESSION = "1BVtsOK4Bu7_48BNrPO3Zaee9GSk8nQI0Ii9X6q0aEzbZF1XSv9AA5iquVWtvBJXLrNgFjuVnR768s-UWuoOyye927ii9ir6FB9nO-qJqa0JuhZipgSb0EMfrcLDE6BwpGb4NWT__5GynoHde0tiBH5NzwxUE5ESPb7c2MKvQzDExTZU9vrGGUBEpSSK9Ri-b_DE5244rgRqm0flCl4x4T0EnNSsZHkIO0Px0hEcS08W5Yhacp3nViu5KCMrqi_72a0jY7sdE_Mykd9S24IR1DS6GKgtLvOVPrzhYN8MXWtU7vr99KIdT2mWGiKR_Z5o-bXhFVAEmTL2QmOXTMNlFQhBhwLD4udc="
+MONGO_DB_URL = "mongodb+srv://scan:scan123@scanner.xxtiq.mongodb.net/?retryWrites=true&w=majority"
+SIBYL = [2093473332,5146000168]
+ENFORCERS = [2093473332,5146000168]
+INSPECTORS = [1537076718,5001573230,2070119160,5069705982,5147265129,1242979521,2131857711,5213143273,837914403,1608911105,5278295844,1883976677,998589443,1789859817,5292346355]
+Sibyl_logs = (-1001525807961)
+Sibyl_approved_logs = (-1001525807961)
+GBAN_MSG_LOGS = (-1001525132581)
+BOT_TOKEN = "5394211831:AAEQEU_doh1wqoxT5i1cq9N3tfsGTJHpiSY"
+OWNERID = [2093473332,5146000168]
 
 INSPECTORS.extend(SIBYL)
 ENFORCERS.extend(INSPECTORS)
