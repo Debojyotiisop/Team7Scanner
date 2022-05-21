@@ -4,6 +4,7 @@ FROM python:3.10.4-slim-buster
 WORKDIR /Team7Scanner/
 
 RUN apt-get update && apt-get upgrade -y
+RUN /usr/local/bin/python -m pip install --upgrade pip
 
 COPY requirements.txt .
 
