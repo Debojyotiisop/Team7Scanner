@@ -9,10 +9,9 @@ from Team7.plugins.Mongo_DB.tree import add_inspector, add_enforcers, get_data
 from Team7 import ENFORCERS, INSPECTORS, SIBYL, session
 from Team7 import System, system_cmd
 from Team7 import Sibyl_logs
-
+import heroku3
 from datetime import datetime
 from urllib.parse import urlparse, urlunparse
-import heroku3
 import os
 import re
 import json
@@ -225,7 +224,7 @@ async def rmins(event) -> None:
     )
 
 
-@System.on(system_cmd(pattern=r"info ", allow_inspectors=True,allow_enforcer=True))
+@System.on(system_cmd(pattern=r"info", allow_inspectors=True,allow_enforcer=True))
 async def info(event) -> None:
     data = (await get_data())["standalone"]
     if event.text.split(" ", 1)[1] not in data.keys():
@@ -288,7 +287,7 @@ async def leave(event) -> None:
         await System.send_message(event.chat_id, f"TEAM7 has left chat[{link}]")
 
 
-@System.on(system_cmd(pattern=r"get_redirect ", allow_inspectors=True))
+@System.on(system_cmd(pattern=r"get_redirect", allow_inspectors=True))
 async def redirect(event) -> None:
     try:
         of = event.text.split(" ", 1)[1]
