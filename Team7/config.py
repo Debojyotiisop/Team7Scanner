@@ -1,12 +1,3 @@
-import json
-import os
-
-
-def get_user_list(config, key):
-    with open("{}/Team7/{}".format(os.getcwd(), config), "r") as json_file:
-        return json.load(json_file)[key]
-
-
 class Config(object):
     API_ID = 19153657
     API_HASH = "f7ec417477c60578119d3d0bcf42f38c"
