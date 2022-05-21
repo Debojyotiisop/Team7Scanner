@@ -44,7 +44,7 @@ if ENV:
     BOT_TOKEN = []
     OWNERID = [int(x) for x in os.environ.get("OWNERID", "").split()]
 else:
-    import Team7.config as Config
+    from Team7.config import Development as Config
 
     API_ID_KEY = Config.API_ID
     API_HASH_KEY = Config.API_HASH
