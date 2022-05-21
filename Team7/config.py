@@ -21,5 +21,5 @@ class Config(object):
     Sibyl_logs = (-1001525807961)
     STRING_SESSION = "1BVtsOK4Bu7_48BNrPO3Zaee9GSk8nQI0Ii9X6q0aEzbZF1XSv9AA5iquVWtvBJXLrNgFjuVnR768s-UWuoOyye927ii9ir6FB9nO-qJqa0JuhZipgSb0EMfrcLDE6BwpGb4NWT__5GynoHde0tiBH5NzwxUE5ESPb7c2MKvQzDExTZU9vrGGUBEpSSK9Ri-b_DE5244rgRqm0flCl4x4T0EnNSsZHkIO0Px0hEcS08W5Yhacp3nViu5KCMrqi_72a0jY7sdE_Mykd9S24IR1DS6GKgtLvOVPrzhYN8MXWtU7vr99KIdT2mWGiKR_Z5o-bXhFVAEmTL2QmOXTMNlFQhBhwLD4udc="
 
-    class Development(Config):
-    LOGGER = True
+class Development(Config):
+LOGGER = True
